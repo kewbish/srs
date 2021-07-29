@@ -7,10 +7,10 @@ _sage_const_0 = Integer(0); _sage_const_1 = Integer(1); _sage_const_4 = Integer(
 from sage.misc.prandom import randint
 from typing import Union
 
-def euler_primality(n: int, k: int, a: int = _sage_const_0 ) -> Union[bool, tuple[bool, int]]:
+def euler_primality(n: int, k: int, a: int = _sage_const_0 ) -> bool:
     """
     Returns True if number is probably prime.
-    Returns False, Fermat witness: int if number is composite.
+    Returns False if number is composite.
     """
     if n == _sage_const_1  or n == _sage_const_4 :
         return False
@@ -21,17 +21,17 @@ def euler_primality(n: int, k: int, a: int = _sage_const_0 ) -> Union[bool, tupl
             a = randint(_sage_const_2 , n - _sage_const_2 )
         expted = power_mod(a, (n - _sage_const_1 ) // _sage_const_2 , n)
         if expted not in (_sage_const_1 , n - _sage_const_1 ):
-            return False, a
+            return False
     return True
 
 if __name__ == "__main__":
     for n in range(_sage_const_1 , _sage_const_10 **_sage_const_4 ):
         euler_res = euler_primality(n, _sage_const_20 )
         sage_res = is_prime(n)
-        if type(euler_res) == tuple and euler_res[_sage_const_0 ] == False:
+        if not euler_res:
             # Euler composite
-            print(f"Composite: {n}, witness: {euler_res[_sage_const_1 ]}")
-        elif type(euler_res) == bool and not sage_res:
+            print(f"Composite: {n}")
+        elif euler_res and not sage_res:
             # Euler primality returns True, Sage returns False
             print(f"Euler pseudoprime: {n}")
         elif euler_res:

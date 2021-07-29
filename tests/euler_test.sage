@@ -1,7 +1,7 @@
 from sage.misc.prandom import randint
 from typing import Union
 
-def euler_primality(n: int, k: int, a: int = 0) -> Union[bool, tuple[bool, int]]:
+def euler_primality(n: int, k: int, a: int = 0) -> bool:
     """
     Returns True if number is probably prime.
     Returns False if number is composite.
@@ -24,7 +24,7 @@ if __name__ == "__main__":
         sage_res = is_prime(n)
         if not euler_res:
             # Euler composite
-            print(f"Composite: {n}, witness: {euler_res[1]}")
+            print(f"Composite: {n}")
         elif euler_res and not sage_res:
             # Euler primality returns True, Sage returns False
             print(f"Euler pseudoprime: {n}")
