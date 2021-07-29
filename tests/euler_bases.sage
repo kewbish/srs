@@ -1,12 +1,11 @@
 from collections import defaultdict
 from multiprocessing import Pool
 from sage.misc.prandom import randint
-from typing import Union
 
-def euler_primality(n: int, k: int, a: int = 0) -> Union[bool, tuple[bool, int]]:
+def euler_primality(n: int, k: int, a: int = 0) -> bool:
     """
     Returns True if number is probably prime.
-    Returns False, Fermat witness: int if number is composite.
+    Returns False if number is composite.
     """
     if n == 1 or n == 4:
         return False
@@ -17,7 +16,7 @@ def euler_primality(n: int, k: int, a: int = 0) -> Union[bool, tuple[bool, int]]
             a = randint(2, n - 2)
         expted = power_mod(a, (n - 1) // 2, n)
         if expted not in (1, n - 1):
-            return False, a
+            return False
     return True
 
 def average_pprimes(k) -> float:
@@ -25,10 +24,13 @@ def average_pprimes(k) -> float:
     for _ in range(3):
         pprimes = 0
         for n, is_prime in randints:
+            # euler_res = euler_primality(n, k) # passing all random bases
+            # euler_res = euler_primality(n, k, 2) # passing a specific base
             euler_res_1 = euler_primality(n, k, 2)
             euler_res_2 = euler_primality(n, k, 5)
-            if type(euler_res_1) == bool and type(euler_res_2) == bool and not is_prime:
-                # Euler primality returns True, Sage returns False
+            # if euler_res and not is_prime: # for passing 1 base
+            if euler_res_1 and euler_res_2 and not is_prime: # for passing 2 bases together
+                # Euler primality returns True, Sage returns False => pseudoprime
                 print(f"Euler pseudoprime: {n}, tries: {k}")
                 pprimes += 1
         result += pprimes
@@ -43,8 +45,11 @@ if __name__ == "__main__":
     with Pool(50) as p:
         results = {k: average_pprimes(k) for k in range(1, 100)}
     print(results)
+    # lowest number of tries for lowest number of pseudoprimes
     print(sorted(results.items(), key=lambda x: x[1])[0])
 
+
+# === RESULTS ===
 
 # WITH BASE 2
 # first trial: only needed 1 base test to pass
