@@ -10,11 +10,13 @@ def euler_primality(n: int, k: int, a: int = 0) -> bool:
         return False
     elif n == 2 or n == 3:
         return True
+    elif n % 2 == 0:
+        return False
     for _ in range(k):
         if a == 0:
             a = randint(2, n - 2)
         expted = power_mod(a, (n - 1) // 2, n)
-        if expted not in (1, n - 1):
+        if expted != jacobi_symbol(a, n):
             return False
     return True
 

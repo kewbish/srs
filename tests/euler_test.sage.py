@@ -16,11 +16,13 @@ def euler_primality(n: int, k: int, a: int = _sage_const_0 ) -> bool:
         return False
     elif n == _sage_const_2  or n == _sage_const_3 :
         return True
+    elif n % _sage_const_2  == _sage_const_0 :
+        return False
     for _ in range(k):
         if a == _sage_const_0 :
             a = randint(_sage_const_2 , n - _sage_const_2 )
         expted = power_mod(a, (n - _sage_const_1 ) // _sage_const_2 , n)
-        if expted not in (_sage_const_1 , n - _sage_const_1 ):
+        if expted != jacobi_symbol(a, n):
             return False
     return True
 
