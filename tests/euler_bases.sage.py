@@ -42,7 +42,7 @@ def average_pprimes(k) -> float:
         for n, is_prime in gen_randints():
             # euler_res = euler_primality(n, k) # passing all random bases
             # euler_res = euler_primality(n, k, 5) # passing a specific base
-            euler_res_1 = euler_primality(n, k, _sage_const_3 )
+            euler_res_1 = euler_primality(n, k, _sage_const_2 )
             euler_res_2 = euler_primality(n, k, _sage_const_5 )
             # if euler_res and not is_prime: # for passing 1 base
             if euler_res_1 and euler_res_2 and not is_prime: # for passing 2 bases together
