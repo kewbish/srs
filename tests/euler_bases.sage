@@ -23,7 +23,7 @@ def euler_primality(n: int, k: int, a: int = 0) -> bool:
 
 def gen_randints() -> list[tuple[int, bool]]:
     randints = []
-    for _ in range(10^3):
+    for _ in range(10^4):
         rand = randint(1000000, 2000000)
         sage_rand = is_prime(rand)
         randints.append((rand, sage_rand))
@@ -47,7 +47,7 @@ def average_pprimes(k) -> float:
     return numerical_approx(result / 3., digits=2)
 
 if __name__ == "__main__":
-    with Pool(50) as p:
+    with Pool(4) as p:
         results = {k: average_pprimes(k) for k in range(1, 100)}
     print(results)
     # lowest number of tries for lowest number of pseudoprimes
