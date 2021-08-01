@@ -1,6 +1,6 @@
-from collections import defaultdict
 from multiprocessing import Pool
 from sage.misc.prandom import randint
+from sys import argv
 
 def euler_primality(n: int, k: int, a: int = 0) -> bool:
     """
@@ -34,19 +34,27 @@ def average_pprimes(k) -> float:
     for _ in range(3):
         pprimes = 0
         for n, is_prime in gen_randints():
-            # euler_res = euler_primality(n, k) # passing all random bases
-            # euler_res = euler_primality(n, k, 5) # passing a specific base
-            euler_res_1 = euler_primality(n, k, 2)
-            euler_res_2 = euler_primality(n, k, 5)
-            # if euler_res and not is_prime: # for passing 1 base
-            if euler_res_1 and euler_res_2 and not is_prime: # for passing 2 bases together
-                # Euler primality returns True, Sage returns False => pseudoprime
-                print(f"Euler pseudoprime: {n}, tries: {k}")
-                pprimes += 1
+            if len(argv) == 1:
+                euler_res = euler_primality(n, k) # passing all random bases
+            elif len(argv) == 2:
+                euler_res = euler_primality(n, k, int(argv[1])) # passing a specific base
+            elif len(argv) == 3:
+                euler_res_2 = euler_primality(n, k, int(argv[2]))
+            if len(argv) < 3:
+                if euler_res and not is_prime:
+                    # print(f"Euler pseudoprime: {n}, tries: {k}")
+                    pprimes += 1
+            else:
+                if euler_res and euler_res_2 and not is_prime: # for passing 2 bases together
+                    # Euler primality returns True, Sage returns False => pseudoprime
+                    # print(f"Euler pseudoprime: {n}, tries: {k}")
+                    pprimes += 1
         result += pprimes
     return numerical_approx(result / 3., digits=2)
 
+
 if __name__ == "__main__":
+    print(argv)
     with Pool(4) as p:
         results = {k: average_pprimes(k) for k in range(1, 100)}
     print(results)
