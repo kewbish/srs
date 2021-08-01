@@ -1,11 +1,9 @@
 \documentclass{article}
 \usepackage{style}
 \usepackage[utf8]{inputenc}
-\usepackage{lipsum}
 \usepackage{placeins}
 \usepackage{booktabs} 
-% booktabs package lets you create beautiful tables
-% use tablesgenerator.com and select the booktabs option
+\usepackage[title]{appendix}
 
 \graphicspath{{media/}}
 
@@ -32,78 +30,23 @@ Occado Technology Sofia\\%
 Introduction
 
 \section{Methods}
+Methods
 
-\subsection{Euler's Primality Test}
-The results over three trials of Euler's Primality Test are shown in Table \ref{table:euler}. Each trial tested a different $k$ value, and consisted of:
+\subsection{Base Analysis}
+Each primality test was analyzed in a standard way over three trials; the raw data is available in Appendix A. Each trial tested a different $k$ value, and consisted of:
 \begin{itemize}
     \item{Generating a random set ($S$) of $10^4$ integers such that $10^6 < x < 2*10^6$}
     \item{Using SageMath's \texttt{is\_prime} to check for primality for each integer in $S$}
-    \item{Running Euler's primality test with $k$ bases tried on each integer in $S$}
-    \item{Counting all pseudoprimes which passed Euler's but not Sage's primality test}
+    \item{Running the primality test with $k$ attempts run on each integer in $S$ with respect to some base $a$}
+    \item{Counting all pseudoprimes which passed the primality test but not Sage's primality test}
     \item{Repeat for three sub-trials, average results and return lowest number of bases tried (lowest $k$) that returned the lowest number of pseudoprimes passed}
 \end{itemize}
-Each trial was timed with the Linux \texttt{time} command, recording the real, or total elapsed wall time, spent. 
+$a$ was a choice of either all random bases, 2, 3, 5, and a pair of 2, 3, or 5. Each trial was timed with the Linux \texttt{time} command, recording the real, or total wall time, elapsed. 
 
 \section{Results}
+Simplified tables and synthesized figures
 
-\FloatBarrier
-\begin{table}[h]
-\caption{Raw data for Euler's Primality Test Trials}
-\begin{tabular}{@{}llll@{}}
-\toprule
-                                       & \multicolumn{3}{l}{All Random Bases}  \\ \midrule
-                                       & Trial 1     & Trial 2    & Trial 3    \\
-Running Time                           & 1m50.609s   & 2m4.602s   & 1m53.909s  \\
-Lowest k required                      & 3           & 5          & 2          \\
-Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\
-Range of lowest k required             & \multicolumn{3}{l}{3}                 \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\\midrule
-                                       & \multicolumn{3}{l}{Base 2}            \\\midrule
-                                       & Trial 1     & Trial 2    & Trial 3    \\
-Running Time                           & 1m45.231s   & 1m41.760s  & 1m37.776s  \\
-Lowest k required                      & 2           & 1          & 3          \\
-Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\
-Range of lowest k required             & \multicolumn{3}{l}{2}                 \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\\midrule
-                                       & \multicolumn{3}{l}{Base 3}            \\\midrule
-                                       & Trial 1     & Trial 2    & Trial 3    \\
-Running Time                           & 1m52.067s   & 1m39.540s  & 1m37.529s  \\
-Lowest k required                      & 2           & 2          & 1          \\
-Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\
-Range of lowest k required             & \multicolumn{3}{l}{1}                 \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\\midrule
-                                       & \multicolumn{3}{l}{Base 5}            \\\midrule
-                                       & Trial 1     & Trial 2    & Trial 3    \\
-Running Time                           & 1m51.691s   & 1m42.775s  & 1m52.078s  \\
-Lowest k required                      & 2           & 2          & 2          \\
-Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\
-Range of lowest k required             & \multicolumn{3}{l}{0}                 \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\\midrule
-                                       & \multicolumn{3}{l}{Base 2 and Base 3} \\\midrule
-                                       & Trial 1     & Trial 2    & Trial 3    \\
-Running Time                           & 3m32.639s   & 3m8.813s   & 3m3.992s   \\
-Lowest k required                      & 1           & 1          & 1          \\
-Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\
-Range of lowest k required             & \multicolumn{3}{l}{0}                 \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\
-                                       & \multicolumn{3}{l}{Base 3 and Base 5} \\\midrule
-                                       & Trial 1     & Trial 2    & Trial 3    \\
-Running Time                           & 3m17.024s   & 2m59.818s  & 3m5.117s   \\
-Lowest k required                      & 1           & 1          & 1          \\
-Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\
-Range of lowest k required             & \multicolumn{3}{l}{0}                 \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\\midrule
-                                       & \multicolumn{3}{l}{Base 2 and Base 5} \\\midrule
-                                       & Trial 1     & Trial 2    & Trial 3    \\
-Running Time                           & 3m5.117s    & 2m59.818s  & 19.840s    \\ % FINISH TMRW
-Lowest k required                      & 1           & 1          & 2          \\
-Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\
-Range of lowest k required             & \multicolumn{3}{l}{1}                 \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\ \bottomrule
-\end{tabular}
-\end{table}
-\label{table:euler}
-\FloatBarrier
+The results over three trials of Fermat's Primality Test are shown in Table \ref{table:fermat}. The results over three trials of Euler's Primality Test are shown in Table \ref{table:euler}. 
 
 \section{Discussion}
 Discussion of results
@@ -114,6 +57,132 @@ Conclusion
 \nocite{*}
 \bibliographystyle{plainnat}
 \bibliography{references}
+
+\appendix
+\begin{appendices}
+\section{Raw Data for Primality Tests}
+
+\subsection{Fermat's Primality Test}
+\FloatBarrier
+\begin{table}[h]
+\caption{Raw data for Fermat's Primality Test Trials}
+\label{table:fermat}
+\begin{tabular}{@{}llll@{}}
+\toprule
+                                       & \multicolumn{3}{l}{All Random Bases}  \\ \midrule
+                                       & Trial 1     & Trial 2    & Trial 3    \\
+Running Time                           & 2m45.313s   & 2m46.200s  & 2m42.205s  \\
+Lowest k required                      & 12          & 74         & 93         \\
+Pseudoprimes passed at lowest k        & 0           & 0.33       & 0          \\\cmidrule(lr){2-4}
+Range of lowest k required             & \multicolumn{3}{l}{81}                \\
+Range of number of pseudoprimes passed & \multicolumn{3}{l}{0.33}              \\\midrule
+                                       & \multicolumn{3}{l}{Base 2}            \\\midrule
+                                       & Trial 1     & Trial 2    & Trial 3    \\
+Running Time                           & 2m28.057s   & 2m29.196s  & 2m31.840s  \\
+Lowest k required                      & 45          & 24         & 8          \\
+Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\\cmidrule(lr){2-4}
+Range of lowest k required             & \multicolumn{3}{l}{37}                \\
+Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\\midrule
+                                       & \multicolumn{3}{l}{Base 3}            \\\midrule
+                                       & Trial 1     & Trial 2    & Trial 3    \\
+Running Time                           & 2m30.574s   & 2m46.716s  & 2m27.309s  \\
+Lowest k required                      & 13          & 60         & 16         \\
+Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\\cmidrule(lr){2-4}
+Range of lowest k required             & \multicolumn{3}{l}{44}                \\
+Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\\midrule
+                                       & \multicolumn{3}{l}{Base 5}            \\\midrule
+                                       & Trial 1     & Trial 2    & Trial 3    \\
+Running Time                           & 2m27.032s   & 2m26.897s  & 2m23.043s  \\
+Lowest k required                      & 4           & 27         & 7          \\
+Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\\cmidrule(lr){2-4}
+Range of lowest k required             & \multicolumn{3}{l}{20}                \\
+Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\\midrule
+                                       & \multicolumn{3}{l}{Base 2 and Base 3} \\\midrule 
+                                       & Trial 1     & Trial 2    & Trial 3    \\
+Running Time                           & 4m40.323s   & 5m13.970s  & 4m51.122s  \\
+Lowest k required                      & 19          & 25         & 13         \\
+Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\\cmidrule(lr){2-4}
+Range of lowest k required             & \multicolumn{3}{l}{12}                \\
+Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\\midrule
+                                       & \multicolumn{3}{l}{Base 3 and Base 5} \\\midrule
+                                       & Trial 1     & Trial 2    & Trial 3    \\
+Running Time                           & 5m6.811s    & 5m1.727s   & 4m41.699s  \\
+Lowest k required                      & 2           & 7          & 6          \\
+Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\\cmidrule(lr){2-4}
+Range of lowest k required             & \multicolumn{3}{l}{5}                 \\
+Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\\midrule
+                                       & \multicolumn{3}{l}{Base 2 and Base 5} \\\midrule
+                                       & Trial 1     & Trial 2    & Trial 3    \\
+Running Time                           & 4m47.168s   & 5m38.154s  & 5m26.986s  \\
+Lowest k required                      & 6           & 11         & 10         \\
+Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\\cmidrule(lr){2-4}
+Range of lowest k required             & \multicolumn{3}{l}{5}                 \\
+Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\ \bottomrule
+\end{tabular}
+\end{table}
+\FloatBarrier
+
+\subsection{Euler's Primality Test}
+\FloatBarrier
+\begin{table}[h]
+\caption{Raw data for Euler's Primality Test Trials}
+\label{table:euler}
+\begin{tabular}{@{}llll@{}}
+\toprule
+                                       & \multicolumn{3}{l}{All Random Bases}  \\ \midrule
+                                       & Trial 1     & Trial 2    & Trial 3    \\
+Running Time                           & 1m50.609s   & 2m4.602s   & 1m53.909s  \\
+Lowest k required                      & 3           & 5          & 2          \\
+Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\\cmidrule(lr){2-4}
+Range of lowest k required             & \multicolumn{3}{l}{3}                 \\
+Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\\midrule
+                                       & \multicolumn{3}{l}{Base 2}            \\\midrule
+                                       & Trial 1     & Trial 2    & Trial 3    \\
+Running Time                           & 1m45.231s   & 1m41.760s  & 1m37.776s  \\
+Lowest k required                      & 2           & 1          & 3          \\
+Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\\cmidrule(lr){2-4}
+Range of lowest k required             & \multicolumn{3}{l}{2}                 \\
+Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\\midrule
+                                       & \multicolumn{3}{l}{Base 3}            \\\midrule
+                                       & Trial 1     & Trial 2    & Trial 3    \\
+Running Time                           & 1m52.067s   & 1m39.540s  & 1m37.529s  \\
+Lowest k required                      & 2           & 2          & 1          \\
+Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\\cmidrule(lr){2-4}
+Range of lowest k required             & \multicolumn{3}{l}{1}                 \\
+Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\\midrule
+                                       & \multicolumn{3}{l}{Base 5}            \\\midrule
+                                       & Trial 1     & Trial 2    & Trial 3    \\
+Running Time                           & 1m51.691s   & 1m42.775s  & 1m52.078s  \\
+Lowest k required                      & 2           & 2          & 2          \\
+Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\\cmidrule(lr){2-4}
+Range of lowest k required             & \multicolumn{3}{l}{0}                 \\
+Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\\midrule
+                                       & \multicolumn{3}{l}{Base 2 and Base 3} \\\midrule
+                                       & Trial 1     & Trial 2    & Trial 3    \\
+Running Time                           & 3m32.639s   & 3m8.813s   & 3m3.992s   \\
+Lowest k required                      & 1           & 1          & 1          \\
+Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\\cmidrule(lr){2-4}
+Range of lowest k required             & \multicolumn{3}{l}{0}                 \\
+Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\\midrule
+                                       & \multicolumn{3}{l}{Base 3 and Base 5} \\\midrule
+                                       & Trial 1     & Trial 2    & Trial 3    \\
+Running Time                           & 3m17.024s   & 2m59.818s  & 3m5.117s   \\
+Lowest k required                      & 1           & 1          & 1          \\
+Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\\cmidrule(lr){2-4}
+Range of lowest k required             & \multicolumn{3}{l}{0}                 \\
+Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\\midrule
+                                       & \multicolumn{3}{l}{Base 2 and Base 5} \\\midrule
+                                       & Trial 1     & Trial 2    & Trial 3    \\
+Running Time                           & 3m4.498s    & 3m14.970s  & 2m57.338s  \\
+Lowest k required                      & 1           & 1          & 1          \\
+Pseudoprimes passed at lowest k        & 0           & 0          & 0          \\\cmidrule(lr){2-4}
+Range of lowest k required             & \multicolumn{3}{l}{0}                 \\
+Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 \\ \bottomrule
+\end{tabular}
+\end{table}
+\FloatBarrier
+
+\end{appendices}
 
 \end{document}
 
