@@ -13,4 +13,4 @@
 .*.lb
 
 # Script Results
-scripts/.*.txt
+scripts/*.txt
