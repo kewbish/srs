@@ -14,3 +14,6 @@
 
 # Script Results
 scripts/*.txt
+
+# Pycache
+__pycache__/
