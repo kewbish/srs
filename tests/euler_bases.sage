@@ -36,9 +36,9 @@ def average_pprimes(k) -> float:
         for n, is_prime in gen_randints():
             if len(argv) == 1:
                 euler_res = euler_primality(n, k) # passing all random bases
-            elif len(argv) == 2:
+            elif len(argv) >= 2:
                 euler_res = euler_primality(n, k, int(argv[1])) # passing a specific base
-            elif len(argv) == 3:
+            if len(argv) == 3:
                 euler_res_2 = euler_primality(n, k, int(argv[2]))
             if len(argv) < 3:
                 if euler_res and not is_prime:

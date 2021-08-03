@@ -49,9 +49,9 @@ def average_pprimes(k) -> float:
         for n, is_prime in gen_randints():
             if len(argv) == 1:
                 mr_res = mr_primality(n, k) # passing all random bases
-            elif len(argv) == 2:
+            elif len(argv) >= 2:
                 mr_res = mr_primality(n, k, int(argv[1])) # passing a specific base
-            elif len(argv) == 3:
+            if len(argv) == 3:
                 mr_res_2 = mr_primality(n, k, int(argv[2]))
             if len(argv) < 3:
                 if mr_res and not is_prime:

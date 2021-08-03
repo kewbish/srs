@@ -45,16 +45,16 @@ def average_pprimes(k) -> float:
         for n, is_prime in gen_randints():
             if len(argv) == 1:
                 fermat_res = fermat_primality(n, k) # passing all random bases
-            elif len(argv) == 2:
+            elif len(argv) >= 2:
                 fermat_res = fermat_primality(n, k, int(argv[1])) # passing a specific base
-            elif len(argv) == 3:
+            if len(argv) == 3:
                 fermat_res_2 = fermat_primality(n, k, int(argv[2]))
             if len(argv) < 3:
                 if type(fermat_res) == bool and not is_prime: # for passing 1 base
                     # print(f"Fermat pseudoprime: {n}, tries: {k}")
                     pprimes += 1
             else:
-                if type(fermat_res) and type(fermat_res_2) == bool and not is_prime: # for passing 2 bases together
+                if type(fermat_res) == bool and type(fermat_res_2) == bool and not is_prime: # for passing 2 bases together
                     # Fermat primality returns True, Sage returns False => pseudoprime
                     # print(f"Fermat pseudoprime: {n}, tries: {k}")
                     pprimes += 1
