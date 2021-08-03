@@ -29,6 +29,107 @@ Occado Technology Sofia\\%
 \section{Introduction}
 Introduction
 
+\subsection{Fermat Primality Test}
+The Fermat Primality Test is a probablistic primality test based on Fermat's little theorem.
+Fermat's little theorem, developed by Pierre de Fermat in 1640, states that for any integer $a$ and any prime $p$, the following holds:
+\[
+    a^p \equiv a \pmod{p} 
+\]
+If $a$ is not divisible by, or \emph{coprime} to, p, the following is equivalent:
+\[
+    a^{(p - 1)} \equiv 1 \pmod{p} 
+\]
+
+\begin{proof} % https://artofproblemsolving.com/wiki/index.php/Fermat%27s_Little_Theorem
+Consider $S = \{a, 2a, 3a, \ldots{}, (p - 1) * a\}$.
+Suppose $ra$ and $sa$ in the set are equal $\pmod{p}$, so $r \equiv s \pmod{p}$.
+Therefore, the $p - 1$ multiples of $a$ in $S$ are uniquely distinct, and must be congruent to ${1, 2, 3, \ldots{}, (p - 1)}$ in some order.
+Multiply these congruences like so:
+    \[a * 2a * 3a * \ldots{} * (p - 1)a \equiv 1 * 2 * 3 * \ldots{} (p - 1) \pmod{p}\]
+This gives:
+    \[a^{(p - 1)} * (p - 1)! \equiv (p - 1)! \pmod{p}\]
+Divide by $(p - 1)!$ on each side for:
+    \[a^{(p - 1)} \equiv 1 \pmod{p}\]
+To arrive at the alternate form of Fermat's Little Theorem, multiply both sides by $a$.
+    \[a^p \equiv a \pmod{p}\]
+\end{proof}
+
+Knowing that $a^{(n - 1)} \equiv 1 \pmod{n}$ holds if $n$ is prime, Fermat's primality test chooses $k$ random integers $a$ coprime to $n$ to test if all $a$ are congruent to 1. Because this holds trivially for $a \equiv 1 \pmod{n}$ and if $n$ is odd and $a \equiv -1 \pmod{n}$, $a$ is conventionally chosen such that $1 < a < n - 1$. Higher values of $k$ indicate a higher probability that the number is prime.
+
+If $n$ passes these $k$ base tests, it is known as a probable prime. However, not all numbers that pass the Fermat primality test are prime - composite numbers $n$ that pass the test are known as Fermat pseudoprimes. There are infinitely many Fermat pseudoprimes, and several forms of composite numbers that pass the test. For example, Carmichael numbers, composite numbers that satisfy the relation $b^{(n-1)} \equiv 1 \pmod{n}$ for all integers $b$ coprime to $n$, all pass Fermat's primality test.
+
+\subsection{Euler (Solovay-Strassen) Test} % https://artofproblemsolving.com/wiki/index.php/Euler%27s_Totient_Theorem
+The Solovay-Strassen Test is another probablistic test, utilizing the properties of Euler's theorem. Proposed by Leonhard Euler in 1763, Euler's theorem is a generalization of Fermat's little theorem, stating that if $a$ and $p$ are coprime, then the following holds:
+\[
+    a^{\phi(n)} \equiv 1 \pmod{n}
+\]
+The function $\phi(n)$ is Euler's totient function. The totient of some number $n$ is the number of positive integers $l$ in the range $1 <= l <= n$ where l is coprime to n.
+
+\begin{proof}
+    Consider $S = \{1 <= l <= n | gcd(l, n) = 1\} = \{l_1, l_2, l_3, \ldots{}, l_{\phi(n)}\}$.
+    Create a set $aS = \{al_1, al_2, al_3, \ldots{}, al_{\phi(n)}\}$. \\
+    All elements of $aS$ are relatively prime to $n$, so if all elements of $aS$ are distinct, $aS = S$. All elements of $aS$ are distinct, as all elements of $S$ are distinct. Therefore, each element of $aS \equiv S \pmod{n}$.
+    Therefore:
+    \[
+        l_1 * l_2 * l_3 * \ldots{} * l_{\phi(n)} \equiv al_1 * al_2 * al_3 * \ldots{} * al_{\phi(n)} \pmod{n}
+    \]
+    As $l_1 * l_2 * l_3 * \ldots{} * l_{\phi(n)}$ is relatively prime to $n$, reducing this gives:
+    \[
+        a^{\phi(n)} * l_1 * l_2 * l_3 * \ldots{} * l_{\phi(n)} \equiv l_1 * l_2 * l_3 * \ldots{} * l_{\phi(n)} \pmod{n}
+    \]
+    Therefore, $a^{\phi(n)} \equiv 1 \pmod{n}$.
+\end{proof}
+
+Fermat's little theorem is considered a special case of Euler's theorem, because if $n$ is prime, $\phi(n) = n - 1$.
+
+Given that $a^{\phi(n)} \equiv 1 \pmod{n}$, then 
+\[
+    a^{\phi(n) / 2} \equiv \begin{cases}
+\;\;\,1\pmod{n}& \text{ when there exists }x \text{ such that }a\equiv x^2 \pmod{n}\\
+     -1\pmod{n}& \text{ when there is no such integer.}
+\end{cases}
+\]
+
+The conditions above form the criteria for the Legendre symbol of $a$ and $n$. The Legendre symbol $(\frac{a}{n})$ is defined like so:
+\[
+    (\frac{a}{n}) \begin{cases}
+        0 & \text{ when $a \equiv 0 \pmod{n}$} \\
+        -1& \text{ when $a \not\equiv 0 \pmod{n}$ and there exists $x: a \equiv x^2 \pmod{n}$} \\
+     -1& \text{ when $a \not\equiv 0 \pmod{n}$ and there is no such integer $x$.}
+\end{cases}
+\]
+
+The Jacobi symbol is the generalization of the Legendre symbol to any odd integer $n$, and is used in the Solovay-Strassen primality test. It is defined as the product of the Legendre symbols of $n$'s prime factors, such that:
+\[
+    (\frac{a}{n}) = (\frac{a}{p_1})^{\alpha_{1}} * (\frac{a}{p_2})^{\alpha_{2}} * \ldots{} * (\frac{a}{p_k})^{\alpha_{k}}
+\]
+for $n = p_1^{\alpha_{1}} * p_2^{\alpha_{2}} * \ldots{} * p_k^{\alpha_{k}}$.
+
+As with Fermat's primality test, $k$ random bases $a$ are tested. If $a^{(n - 1) / 2} \equiv (\frac{a}{n}) \pmod{n}$ holds for all $k$ basis, then $n$ is a probable prime.
+
+Similar to Fermat's primality test, the Solovay-Strassen test may pass composite numbers as primes. These are then known as Euler (sometimes Euler-Jacobi) pseudoprimes or liars. All Euler pseudoprimes are also Fermat pseudoprimes. 
+
+\subsection{Miller-Rabin Primality Test} % http://home.sandiego.edu/~dhoffoss/teaching/cryptography/10-Rabin-Miller.pdf
+A third probablistic primality test, the Miller-Rabin primality test was discovered first by Gary Miller in 1976, and subsequently modified by Michael Rabin in 1980. The test relies on two congruence relations that hold when $n$ is an odd prime and rewritten as $2^s * d + 1$, and $a$ is a base such that $0 < a < n$:
+\begin{gather*}
+    a^d \equiv 1 \pmod{n} \\
+    a^{(2^r * d)} \equiv -1 \text{ for some $r$ such that $0 <= r < s$}
+\end{gather*}
+
+Because $n$ is written as $2^s * d + 1$, $n - 1 = 2^s * d$. Therefore, if $a^d \equiv \pm 1 \pmod{n}$, then $n$ is a strong probable prime.
+
+\begin{proof}
+    Given that:
+    \[
+        a^{(n - 1)} \equiv (a^d)^{2^s} \equiv 1 \pmod{n}
+    \]
+    for all prime $n$, and because there are no square roots of 1 other than $\pm 1$, the repeated squaring with $2^s$ doesn't affect the congruence.
+\end{proof}
+
+Otherwise, $a^d \pmod{n}$ is squared, for $a^2d$. If $a^2d \equiv 1 \pmod{n}$, n is composite, because there are different square roots of $a^2m \pmod{n}$ other than $\pm 1$. If $a^2d \equiv -1 \pmod{n}$, then $n$ is a probable prime for similar reasons as above.
+
+These checks are repeated until $a^{(2^{(s - 1)} * d)}$ has been reached. If it is $\pm 1$, the result is known by the tests above; however, if not, $n$ is composite, by Fermat's little theorem.
+
 \section{Methods}
 Methods
 
