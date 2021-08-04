@@ -17,9 +17,9 @@ def template_pprimes(k, fn) -> float:
             if len(argv) == 1:
                 res = fn(n, k, 0)  # passing all random bases
             elif len(argv) >= 2:
-                res = fn(n, k, int(argv[1]))  # passing a specific base
+                res = fn(n, 1, int(argv[1]))  # passing a specific base
             if len(argv) == 3:
-                res_2 = fn(n, k, int(argv[2]))
+                res_2 = fn(n, 1, int(argv[2]))
             if len(argv) < 3:
                 if res and not isprime(n):  # for passing 1 base
                     # print(f"Fermat pseudoprime: {n}, tries: {k}")
@@ -40,6 +40,7 @@ if __name__ == "__main__":
         print(argv)
         ints = np.arange(1, 100)
         results = np.array([template_pprimes(n, fermat_primality) for n in ints])
+        print(np.average(results * 3))
         print((ints[np.argmin(results)], np.min(results)))
         # lowest number of tries for lowest number of pseudoprimes
         # print(sorted(results.items(), key=lambda x: x[1])[0])

@@ -1,10 +1,10 @@
 #!/bin/bash
 
 :> mr_results.txt
-(time sage ../tests/mr_bases.sage) &>> mr_results.txt
-(time sage ../tests/mr_bases.sage 2) &>> mr_results.txt
-(time sage ../tests/mr_bases.sage 3) &>> mr_results.txt
-(time sage ../tests/mr_bases.sage 5) &>> mr_results.txt
-(time sage ../tests/mr_bases.sage 2 3) &>> mr_results.txt
-(time sage ../tests/mr_bases.sage 3 5) &>> mr_results.txt
-(time sage ../tests/mr_bases.sage 2 5) &>> mr_results.txt
+(time python ../tests/mr_bases.py) &>> mr_results.txt
+(time python ../tests/mr_bases.py 2) &>> mr_results.txt
+(time python ../tests/mr_bases.py 3) &>> mr_results.txt
+(time python ../tests/mr_bases.py 5) &>> mr_results.txt
+(time python ../tests/mr_bases.py 2 3) &>> mr_results.txt
+(time python ../tests/mr_bases.py 3 5) &>> mr_results.txt
+(time python ../tests/mr_bases.py 2 5) &>> mr_results.txt
