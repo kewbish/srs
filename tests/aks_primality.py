@@ -4,11 +4,11 @@ import numpy as np
 from sympy import isprime
 
 
+# heavily referenced: https://github.com/Ssophoclis/AKS-algorithm/blob/master/AKS.py
+
+
 @njit
-def perfectPower(n):
-    """Checks if number is a power of another integer,
-    if it returns true, then it is composite.
-    """
+def is_perfect_power(n: int) -> bool:
     for b in range(2, int(np.log2(n)) + 1):
         a = n ** (1 / b)
         if a - int(a) == 0:
@@ -17,25 +17,23 @@ def perfectPower(n):
 
 
 @njit
-def findR(n):
-    """Find smallest r such that the order of n mod r > log2(n)^2."""
+def find_r(n: int) -> int:
     maxK = np.log2(n) ** 2
     nexR = True
     r = 1
-    while nexR == True:
+    while nexR:
         r += 1
         nexR = False
         k = 0
-        while k <= maxK and nexR == False:
+        while k <= maxK and not nexR:
             k = k + 1
-            if fastMod(n, k, r) == 0 or fastMod(n, k, r) == 1:
+            if power_mod(n, k, r) in (0, 1):
                 nexR = True
     return r
 
 
 @njit
-def fastMod(base, power, n):
-    """Implement fast modular exponentiation."""
+def power_mod(base: int, power: int, n: int) -> int:
     r = 1
     while power > 0:
         if power % 2 == 1:
@@ -46,8 +44,7 @@ def fastMod(base, power, n):
 
 
 @njit
-def fastPoly(base, power, r):
-    """Use fast modular exponentiation for polynomials to raise them to a big power."""
+def poly_mod(base: np.ndarray, power: int, r: int) -> np.ndarray:
     x = np.zeros(len(base), dtype=np.int64)
     a = base[0]
     x[0] = 1
@@ -65,8 +62,7 @@ def fastPoly(base, power, r):
 
 
 @njit
-def multi(a, b, n, r):
-    """Function used by fastPoly to multiply two polynomials together."""
+def multi(a: np.ndarray, b: np.ndarray, n: int, r: int) -> np.ndarray:
     x = np.zeros(len(a) + len(b) - 1, dtype=np.int64)
     for i in range(len(a)):
         for j in range(len(b)):
@@ -78,8 +74,7 @@ def multi(a, b, n, r):
 
 
 @njit
-def eulerPhi(r):
-    """Implement the euler phi function"""
+def phi(r: int) -> int:
     x = 0
     for i in range(1, r + 1):
         if gcd(r, i) == 1:
@@ -88,13 +83,12 @@ def eulerPhi(r):
 
 
 @vectorize
-def aks_primality(n):
-    """The main AKS algorithm"""
+def aks_primality(n: int) -> bool:
     print(n)
-    if perfectPower(n) == True:  # step 1
+    if is_perfect_power(n):  # step 1
         return False
 
-    r = findR(n)  # step 2
+    r = find_r(n)  # step 2
 
     for a in range(2, min(r, n)):  # step 3
         if gcd(a, n) > 1:
@@ -103,8 +97,8 @@ def aks_primality(n):
     if n <= r:  # step 4
         return True
 
-    for a in range(1, floor((eulerPhi(r)) ** (1 / 2) * np.log2(n))):
-        x = fastPoly(np.array([a, 1]), n, r)
+    for a in range(1, floor((phi(r)) ** (1 / 2) * np.log2(n))):  # step 5
+        x = poly_mod(np.array([a, 1]), n, r)
         if np.any(x):
             return False
     return True
