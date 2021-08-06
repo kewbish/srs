@@ -17,3 +17,6 @@ scripts/*.txt
 
 # Pycache
 __pycache__/
+
+# TODO
+TODO.md
