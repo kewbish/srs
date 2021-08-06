@@ -1,22 +1,27 @@
-from aks_primality import aks_primality
-from numba import njit
+from aks_primality import aks_probablistic
 import numpy as np
 from sympy import isprime
+from sys import argv
+from template_pprimes import gen_randints
 
-# from template_pprimes import gen_randints
 
-
-@njit
-def gen_randints() -> np.ndarray:
-    return np.random.randint(1000000, 2000000, size=5 * 10 ** 2)
+def aks_pprimes(k) -> float:
+    pprimes = 0
+    for n in gen_randints():
+        res = aks_probablistic(n, k)
+        if res and not isprime(n):
+            pprimes += 1
+    return pprimes
 
 
 if __name__ == "__main__":
 
     def main():
-        ints = np.arange(3, 10 ** 4)
-        aks_res = aks_primality(ints)
-        sympy_res = np.vectorize(isprime)(ints)
-        print(len(aks_res[np.logical_and(aks_res, np.logical_not(sympy_res))]))
+        print(argv)
+        ints = np.arange(1, 2)
+        results = np.array([aks_pprimes(n) for n in ints])
+        print(np.average(results))
+        print((ints[np.argmin(results)], np.min(results)))
+        print(np.min(results), np.max(results))
 
     main()

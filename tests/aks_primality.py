@@ -1,6 +1,7 @@
 from math import gcd, floor
 from numba import njit, vectorize
 import numpy as np
+from random import randint
 from sympy import isprime
 
 
@@ -84,6 +85,13 @@ def phi(r: int) -> int:
 
 @vectorize
 def aks_primality(n: int) -> bool:
+    if n == 1 or n == 4:
+        return False
+    elif n == 2 or n == 3:
+        return True
+    elif n % 2 == 0:
+        return False
+
     print(n)
     if is_perfect_power(n):  # step 1
         return False
@@ -104,11 +112,46 @@ def aks_primality(n: int) -> bool:
     return True
 
 
+@vectorize
+def aks_probablistic(n: int, k: int) -> bool:
+    if n == 1 or n == 4:
+        return False
+    elif n == 2 or n == 3:
+        return True
+    elif n % 2 == 0:
+        return False
+
+    if is_perfect_power(n):  # step 1
+        return False
+
+    r = find_r(n)  # step 2
+
+    for a in range(2, min(r, n)):  # step 3
+        if gcd(a, n) > 1:
+            return False
+
+    if n <= r:  # step 4
+        return True
+
+    k_max = floor((phi(r)) ** (1 / 2) * np.log2(n))
+    if k > k_max:
+        k = k_max
+    a_arr = np.random.randint(1, k_max, k)
+    for a in a_arr:  # step 5
+        x = poly_mod(np.array([a, 1]), n, r)
+        if np.any(x):
+            return False
+    return True
+
+
 if __name__ == "__main__":
 
     def main():
         ints = np.arange(3, 10 ** 4)
-        aks_res = aks_primality(ints)
+        # aks_res = aks_primality(ints)
+        # sympy_res = np.vectorize(isprime)(ints)
+        # print(len(aks_res[np.logical_and(aks_res, np.logical_not(sympy_res))]))
+        aks_res = aks_probablistic(ints, 10)
         sympy_res = np.vectorize(isprime)(ints)
         print(len(aks_res[np.logical_and(aks_res, np.logical_not(sympy_res))]))
 
