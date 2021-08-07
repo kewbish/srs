@@ -25,16 +25,32 @@ Occado Technology Sofia\\%
 \maketitle
 \newpage
 \begin{abstract}
-    Abstract
+    This paper aims to analyze the Fermat, the Euler (Solovay-Strassen), and the Miller-Rabin primality tests, three well-known probabilistic algorithms based on Fermat's little theorem. The Agarwal-Kayal-Saxena test, the first polynomial time deterministic primality test developed, is also discussed, as well as a proposal for a new probabilistic adaptation.
 \end{abstract}
 
 \section{Introduction}
-Introduction
+Prime numbers, or numbers with no factors other than 1 and itself, are of crucial importance in cryptography and cybersecurity. Many encryption algorithms, such as the frequently used Rivest-Shamir-Adleman (RSA) cryptosystem, rely on the 'trapdoor' nature of prime numbers: while multiplying prime numbers is trivial, finding the factors of a composite number is computationally expensive. 
+Since cryptography is so widely applied, generating prime numbers for use in encryption cryptosystems is a major issue and field of research.
 
-\section{Background Theory}
+There is no known pattern to identify prime numbers, so to generate a prime number, a random number $n$ is first generated. This number $n$ is then passed through a primality test, or an algorithm designed to identify if a number is prime or not. A variety of algorithms may be used, including the Fermat, Euler or Solovay-Strassen, Miller-Rabin, and Agarwal-Kayal-Saxena (AKS) tests.
+
+These tests, except the AKS test, are \emph{probabilistic}. A probabilistic test is an algorithm that utilizes some form of randomness in its design; for example, random trial bases may be selected from a range of possibilities. In contrast, a deterministic algorithm, when given an input, will always return the same output. Minimizing the running time of primality tests is desired to increase the efficiency of generating random primes, so often, probabilistic tests are used due to their shorter running time and increased practicality. However, probabilistic tests have a small probability of designating a number as prime when it is composite. This is avoided with deterministic primality tests, such as the AKS test discussed in section \ref{theory:aks}, but issues with impractical running times arise.
+
+The AKS test is notable for being the first polynomial time deterministic primality test. Polynomial time refers to a concept of Big-O theory, or the notation that describes the upper bound of a function when its input tends towards infinity. In Big-O notation, polynomial time, or a function of form $O(n^x)$ is preferred to a function of form $O(x^n)$ for some input size $n$ and value $x$, as $x^n$ will grow faster than $n^x$ as $n$ increases. In other words, $n^x$ algorithms remain more efficient than $x^n$ ones in worst-case scenarios. 
+
+However, even though AKS is bounded by a polynomial time, it remains impractical and incredibly slow compared to other probabilistic tests. As Richard Brent showed in a 2010 comparison with the Miller-Rabin and other probabilistic primality tests found that where 100 trials of Miller-Rabin took 0.3 seconds to process, AKS would take an estimated 37 weeks to run one trial on the same number (equivalent, as AKS is deterministic and only requires one run to determine the output). These times are unfeasible for applied usage, so research into optimizing and discovering probabilistic tests remains relevant.
+% TODO: https://maths-people.anu.edu.au/~brent/pd/comp4600_primality.pdf
+% TODO: https://ieeexplore.ieee.org/document/7942510
+% TODO: http://depts.washington.edu/uwmxl/wordpress/wp-content/uploads/2017/05/AKS_Final_Report.pdf
+
+As an alternative, this paper proposes a probabilistic version of AKS, inspired by methods used by the Fermat, Euler (Solovay-Strassen), and Miller-Rabin tests in choosing a range of random numbers to test against certain congruences and theorems.
+
+\section{Background Number Theory}
+
+Many probabilistic primality tests rely on number theory and modular congruences to test for primality. The Fermat, Euler (Solovay-Strassen), Miller-Rabin, and AKS tests and their basic theory are discussed below.
 
 \subsection{Fermat Primality Test}
-The Fermat Primality Test is a probablistic primality test based on Fermat's little theorem.
+The Fermat Primality Test is a probabilistic primality test based on Fermat's little theorem.
 Fermat's little theorem, developed by Pierre de Fermat in 1640, states that for any integer $a$ and any prime $p$, the following holds:
 \[
     a^p \equiv a \pmod{p} 
@@ -63,7 +79,7 @@ Knowing that $a^{(n - 1)} \equiv 1 \pmod{n}$ holds if $n$ is prime, Fermat's pri
 If $n$ passes these $k$ base tests, it is known as a probable prime. However, not all numbers that pass the Fermat primality test are prime - composite numbers $n$ that pass the test are known as Fermat pseudoprimes. There are infinitely many Fermat pseudoprimes, and several forms of composite numbers that pass the test. For example, Carmichael numbers, composite numbers that satisfy the relation $b^{(n-1)} \equiv 1 \pmod{n}$ for all integers $b$ coprime to $n$, all pass Fermat's primality test.
 
 \subsection{Euler (Solovay-Strassen) Test} % https://artofproblemsolving.com/wiki/index.php/Euler%27s_Totient_Theorem
-The Solovay-Strassen Test is another probablistic test, utilizing the properties of Euler's theorem. Proposed by Leonhard Euler in 1763, Euler's theorem is a generalization of Fermat's little theorem, stating that if $a$ and $p$ are coprime, then the following holds:
+The Solovay-Strassen Test is another probabilistic test, utilizing the properties of Euler's theorem. Proposed by Leonhard Euler in 1763, Euler's theorem is a generalization of Fermat's little theorem, stating that if $a$ and $p$ are coprime, then the following holds:
 \[
     a^{\phi(n)} \equiv 1 \pmod{n}
 \]
@@ -114,7 +130,7 @@ As with Fermat's primality test, $k$ random bases $a$ are tested. If $a^{(n - 1)
 Similar to Fermat's primality test, the Solovay-Strassen test may pass composite numbers as primes. These are then known as Euler (sometimes Euler-Jacobi) pseudoprimes or liars. All Euler pseudoprimes are also Fermat pseudoprimes. 
 
 \subsection{Miller-Rabin Primality Test} % http://home.sandiego.edu/~dhoffoss/teaching/cryptography/10-Rabin-Miller.pdf
-A third probablistic primality test, the Miller-Rabin primality test was discovered first by Gary Miller in 1976, and subsequently modified by Michael Rabin in 1980. The test relies on two congruence relations that hold when $n$ is an odd prime and rewritten as $2^s * d + 1$, and $a$ is a base such that $0 < a < n$:
+A third probabilistic primality test, the Miller-Rabin primality test was discovered first by Gary Miller in 1976, and subsequently modified by Michael Rabin in 1980. The test relies on two congruence relations that hold when $n$ is an odd prime and rewritten as $2^s * d + 1$, and $a$ is a base such that $0 < a < n$:
 \begin{gather*}
     a^d \equiv 1 \pmod{n} \\
     a^{(2^r * d)} \equiv -1 \text{ for some $r$ such that $0 <= r < s$}
@@ -134,7 +150,8 @@ Otherwise, $a^d \pmod{n}$ is squared, for $a^2d$. If $a^2d \equiv 1 \pmod{n}$, n
 
 These checks are repeated until $a^{(2^{(s - 1)} * d)}$ has been reached. If it is $\pm 1$, the result is known by the tests above; however, if not, $n$ is composite, by Fermat's little theorem.
 
-\section{Agarwal-Kayal-Saxena Primality Test} % https://www.cse.iitk.ac.in/users/manindra/algebra/primality_v6.pdf
+\subsection{Agarwal-Kayal-Saxena Primality Test} % https://www.cse.iitk.ac.in/users/manindra/algebra/primality_v6.pdf
+\label{theory:aks}
 By contrast, the Agarwal-Kayal-Saxena, or AKS, primality test, is a deterministic primality test first proprosed by Manindra Agarwal, Neeraj Kayal, and Nitin Saxena in 2002. It is the first primality test to deterministically verify primality in polynomial time for all number inputs, with a time complexity bound of $\mathcal{O}(\log{(n)}^{21/2})$.
 
 The test is based on the theorem that an integer $n >= 2$ and an integer $a$ coprime to $n$, $n$ is prime if and only if the below holds within the polynomial ring $\mathbb{Z}[x]$, or the ring of polynomials with degree at most $n$ over $\mathbb{Z}$.
@@ -169,26 +186,40 @@ If $n <= r$, the number is prime, as this is equivalent to trial division to $\s
 
 The last step of the algorithm reduces the time complexity from exponential to polynomial time by operating over the finite ring $(\mathbb{Z}/(n))[X] / (X^r - 1)$. Each $a$ from $1 <= a <= \lfloor \sqrt{\varphi(r)}\log_2(n) \rfloor$ is checked for the generalized Fermat's theorem. If it does not pass, the number if composite; if it passes, the number is prime.
 
-\section{Probablistic AKS}
+\section{Running Time}
+
+\subsection{Fermat Primality Test}
+
+\subsection{Euler (Solovay-Strassen) Primality Test}
+
+\subsection{Miller-Rabin Primality Test}
+
+\subsection{AKS Primality Test}
+
+\section{Probabilistic AKS}
 
 \section{Methods}
 Methods
 
+See Appendix \ref{appendix:tech} for primality test implementation details and hardware specifications.
+
 \subsection{Base Analysis}
-Each primality test was analyzed in a standard way over three trials; the raw data is available in Appendix A. Each trial tested a different $k$ value, and consisted of: % TODO: Note differences in testing method with AKS due to no base available
+The primality tests were subject to a standardized analysis over fifty trials; the raw data is available in Appendix \ref{appendix:data}. For the probablistic tests, each trial tested a different $k$ value, and consisted of: % TODO: Note differences in testing method with AKS due to no base available
 \begin{itemize}
-    \item{Generating a random set ($S$) of $10^4$ integers such that $10^6 < x < 2*10^6$}
-    \item{Using SageMath's \texttt{is\_prime} to check for primality for each integer in $S$}
+    \item{Generating a random set ($S$) of $10^4$ odd integers such that $10^5 < x < 10^6$}
+    \item{Using Sympy's \texttt{is\_prime} (which runs a variant of the Baillie-Pomerance-Selfridge-Wagstaff probablistic primality test) to check for primality for each integer in $S$}
     \item{Running the primality test with $k$ attempts run on each integer in $S$ with respect to some base $a$}
-    \item{Counting all pseudoprimes which passed the primality test but not Sage's primality test}
-    \item{Repeat for three sub-trials, average results and return lowest number of bases tried (lowest $k$) that returned the lowest number of pseudoprimes passed}
+    \item{Counting all pseudoprimes which passed the primality test but not Sympy's primality test}
+    \item{Return lowest number of bases tried (lowest $k$) that returned the lowest number of pseudoprimes passed, the maximum and minimum number of pseudoprimes, and the average pseudoprimes found}
 \end{itemize}
-$a$ was a choice of either all random bases, 2, 3, 5, and a pair of 2, 3, or 5. Each trial was timed with the Linux \texttt{time} command, recording the real, or total wall time, elapsed. 
+$a$ was a choice of either all random bases, 2, 3, 5, and a pair of 2, 3, or 5. Each trial was timed with the Python \texttt{timeit} command, recording the total wall time elapsed. 
+
+Note that for deterministic AKS, the testing method consisted of running a single trial over the random set $S$.
 
 \section{Results}
 Simplified tables and synthesized figures
 
-The results over three trials of the primality tests are shown in Tables \ref{table:fermat}, \ref{table:euler}, \ref{table:mr}, \ref{table:aks} in Appendix A.
+The raw data of each of the primality tests are shown in Tables \ref{table:fermat}, \ref{table:euler}, \ref{table:mr}, \ref{table:aks} in Appendix \ref{appendix:data}.
 
 \section{Discussion}
 Discussion of results
@@ -202,7 +233,9 @@ Conclusion
 
 \appendix
 \begin{appendices}
-\section{Raw Data for Primality Tests}
+\section{Raw Data for Primality Tests} \label{appendix:data}
+% TODO: Explain row and column interpretation for the CSVs, link them somewhere
+% TODO: Reformat to reference CSVs
 
 \subsection{Fermat's Primality Test}
 \FloatBarrier
@@ -459,10 +492,10 @@ Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  
 \end{longtable}
 \FloatBarrier
 
-\subsection{Probablistic AKS Primality Test}
+\subsection{Probabilistic AKS Primality Test}
 \FloatBarrier
 \begin{longtable}{llll}
-\caption{Raw data for Probablistic AKS Primality Test Trials\label{table:aks}}\\ 
+\caption{Raw data for Probabilistic AKS Primality Test Trials\label{table:aks}}\\ 
 \toprule
                                        & \multicolumn{3}{l}{1 Equation Tested}  \endfirsthead 
 \midrule
@@ -477,11 +510,15 @@ Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}
 \end{longtable}
 \FloatBarrier
 
-\section{Technical Details}
+\section{Technical Details} \label{appendix:tech}
 
 \subsection{Primality Test Implementations}
+The implementations of the primality tests can be found on GitHub at kewbish/srs. % TODO: citation on GitHub
+The tests were implemented with Python 3.7, with the Numpy and Numba libraries used to optimize computations.
+The AKS primality test implementation was iterated on from a reference implementation by Sophoclis Stephanou was found on GitHub. % TODO: citation
 
-\subsection{Hardware and Software}
+\subsection{Hardware}
+The primality tests ran on a HP-15bs028ca running Manjaro Linux x86\_64 and kernel 5.10.49-1-MANJARO, with a 4-core Intel i5-7200U (4) 3.100GHz CPU and 16.0GiB of RAM.
 
 \end{appendices}
 

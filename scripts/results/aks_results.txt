@@ -1,8 +1,0 @@
-['../tests/aks_pseudoprimes.py']
-0.0
-(1, 0)
-0 0
-
-real	1m22.615s
-user	1m22.547s
-sys	0m0.462s

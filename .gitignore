@@ -13,8 +13,8 @@
 .*.lb
 
 # Script Results
-scripts/*.txt
-scripts/**.csv
+scripts/**/*.txt
+scripts/**/*.csv
 
 # Pycache
 __pycache__/
