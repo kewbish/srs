@@ -14,9 +14,11 @@
 
 # Script Results
 scripts/*.txt
+scripts/**.csv
 
 # Pycache
 __pycache__/
 
 # TODO
 TODO.md
+
