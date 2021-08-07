@@ -18,8 +18,7 @@ if __name__ == "__main__":
 
     def main():
         print(argv)
-        ints = np.arange(1, 2)
-        results = np.array([aks_pprimes(n) for n in ints])
+        results = np.array(aks_pprimes(1))
         print(np.average(results))
         print((ints[np.argmin(results)], np.min(results)))
         print(np.min(results), np.max(results))

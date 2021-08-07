@@ -3,6 +3,7 @@ import numpy as np
 from random import randrange
 from sympy import isprime
 from sys import argv
+from timeit import default_timer
 
 
 @njit
@@ -10,7 +11,7 @@ def gen_randints() -> np.ndarray:
     return np.array([randrange(10 ** 5 + 1, 10 ** 6 + 1, 2) for _ in range(10 ** 4)])
 
 
-def template_pprimes(k, fn) -> float:
+def template_pprimes(k: int, fn) -> float:
     pprimes = 0
     for n in gen_randints():
         if len(argv) == 1:
@@ -31,16 +32,21 @@ def template_pprimes(k, fn) -> float:
     return pprimes
 
 
+def output(fn) -> None:
+    start = default_timer()
+    print(argv)
+    ints = np.arange(1, 100)
+    results = np.array([template_pprimes(n, fn) for n in ints])
+    print(repr(results))
+    print(round(np.average(results), 4))
+    print((ints[np.argmin(results)], np.min(results)))
+    end = default_timer()
+    m, s = divmod(end - start, 60)
+    print(f"{round(m)}m{round(s, 4)}s")
+    print("\n")
+
+
 if __name__ == "__main__":
     from fermat_primality import fermat_primality
 
-    def main():
-        print(argv)
-        ints = np.arange(1, 100)
-        results = np.array([template_pprimes(n, fermat_primality) for n in ints])
-        print(np.average(results))
-        print((ints[np.argmin(results)], np.min(results)))
-        # lowest number of tries for lowest number of pseudoprimes
-        # print(sorted(results.items(), key=lambda x: x[1])[0])
-
-    main()
+    output(fermat_primality)
