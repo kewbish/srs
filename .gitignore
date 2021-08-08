@@ -14,7 +14,6 @@
 
 # Script Results
 scripts/**/*.txt
-scripts/**/*.csv
 
 # Pycache
 __pycache__/

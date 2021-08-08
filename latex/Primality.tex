@@ -47,7 +47,9 @@ As an alternative, this paper proposes a probabilistic version of AKS, inspired 
 
 \section{Background Number Theory}
 
-Many probabilistic primality tests rely on number theory and modular congruences to test for primality. The Fermat, Euler (Solovay-Strassen), Miller-Rabin, and AKS tests and their basic theory are discussed below.
+Many probabilistic primality tests rely on number theory and modular arithmetic to test for primality. The Fermat, Euler (Solovay-Strassen), Miller-Rabin, and AKS tests and their background theory are discussed below.
+
+Note that all $\log{n}$ in this paper are assumed to be taken as $\log{2}{n}$ unless otherwise marked.
 
 \subsection{Fermat Primality Test}
 The Fermat Primality Test is a probabilistic primality test based on Fermat's little theorem.
@@ -130,7 +132,7 @@ As with Fermat's primality test, $k$ random bases $a$ are tested. If $a^{(n - 1)
 Similar to Fermat's primality test, the Solovay-Strassen test may pass composite numbers as primes. These are then known as Euler (sometimes Euler-Jacobi) pseudoprimes or liars. All Euler pseudoprimes are also Fermat pseudoprimes. 
 
 \subsection{Miller-Rabin Primality Test} % http://home.sandiego.edu/~dhoffoss/teaching/cryptography/10-Rabin-Miller.pdf
-A third probabilistic primality test, the Miller-Rabin primality test was discovered first by Gary Miller in 1976, and subsequently modified by Michael Rabin in 1980. The test relies on two congruence relations that hold when $n$ is an odd prime and rewritten as $2^s * d + 1$, and $a$ is a base such that $0 < a < n$:
+A third probabilistic primality test, the Miller-Rabin primality test was developed first by Gary Miller in 1976, and subsequently modified by Michael Rabin in 1980. The test relies on two congruence relations that hold when $n$ is an odd prime and rewritten as $2^s * d + 1$, and $a$ is a base such that $0 < a < n$:
 \begin{gather*}
     a^d \equiv 1 \pmod{n} \\
     a^{(2^r * d)} \equiv -1 \text{ for some $r$ such that $0 <= r < s$}
@@ -150,9 +152,9 @@ Otherwise, $a^d \pmod{n}$ is squared, for $a^2d$. If $a^2d \equiv 1 \pmod{n}$, n
 
 These checks are repeated until $a^{(2^{(s - 1)} * d)}$ has been reached. If it is $\pm 1$, the result is known by the tests above; however, if not, $n$ is composite, by Fermat's little theorem.
 
-\subsection{Agarwal-Kayal-Saxena Primality Test} % https://www.cse.iitk.ac.in/users/manindra/algebra/primality_v6.pdf
+\subsection{Agarwal-Kayal-Saxena (AKS) Primality Test} % https://www.cse.iitk.ac.in/users/manindra/algebra/primality_v6.pdf
 \label{theory:aks}
-By contrast, the Agarwal-Kayal-Saxena, or AKS, primality test, is a deterministic primality test first proprosed by Manindra Agarwal, Neeraj Kayal, and Nitin Saxena in 2002. It is the first primality test to deterministically verify primality in polynomial time for all number inputs, with a time complexity bound of $\mathcal{O}(\log{(n)}^{21/2})$.
+By contrast, the AKS primality test is a deterministic primality test first proprosed by Manindra Agarwal, Neeraj Kayal, and Nitin Saxena in 2002. It is the first primality test to deterministically verify primality in polynomial time for all number inputs, with a time complexity bound of $\mathcal{O}(\log{(n)}^{21/2})$.
 
 The test is based on the theorem that an integer $n >= 2$ and an integer $a$ coprime to $n$, $n$ is prime if and only if the below holds within the polynomial ring $\mathbb{Z}[x]$, or the ring of polynomials with degree at most $n$ over $\mathbb{Z}$.
 \[
@@ -178,7 +180,7 @@ The test is based on the theorem that an integer $n >= 2$ and an integer $a$ cop
 
 The test begins by ensuring $n$ is not a perfect power, or a number of form $a^k$ for some $a$ and $k$. If it is, the number is composite.
 
-Next, the algorithm finds the smallest $r$ such that $ord_r(n) > {\log{2}{n}}^2$ and $r$ is coprime to $n$.
+Next, the algorithm finds the smallest $r$ such that $ord_r(n) > {\log{n}}^2$ and $r$ is coprime to $n$.
 
 The algorithm then checks for all $2 <= a <= min(r, n - 1)$ that $a \nmid n$. If $a \vert n$ for some $a$ in this range, the number is composite. This is equivalent to trial division up to $r$.
 
@@ -187,45 +189,64 @@ If $n <= r$, the number is prime, as this is equivalent to trial division to $\s
 The last step of the algorithm reduces the time complexity from exponential to polynomial time by operating over the finite ring $(\mathbb{Z}/(n))[X] / (X^r - 1)$. Each $a$ from $1 <= a <= \lfloor \sqrt{\varphi(r)}\log_2(n) \rfloor$ is checked for the generalized Fermat's theorem. If it does not pass, the number if composite; if it passes, the number is prime.
 
 \section{Running Time}
+This section discusses the running time bounds of the tests with Big-O notation.
+
+In Big-O notation, $\widetilde{O}(f(n))$ is a shorthand for $O(f(n) * log{f(n)}^k)$ for some $k$, ignoring the logarithm factor due to the growth effects of other operations in $f(n)$.
 
 \subsection{Fermat Primality Test}
+The Fermat primality test implementation tested used repeated squaring and multiplication techniques, requiring several modular computations per bit of each number $n$ tested. The number of bits in $n$ is $\log{n}$, so as there are $k$ iterations of a modular exponentiation applied, the final complexity is $O(k * log{n})$.
 
 \subsection{Euler (Solovay-Strassen) Primality Test}
+The Euler (Solovay-Strassen) primality test is implemented in three main steps: the coprime to $n$ check, the computation of the Jacobi symbol $(\frac{a}{n})$, and the modular exponentiation.Checking if a number is coprime to another involves a greatest-common-denominator test, which can be run in a time of $O(log{n})$ where $log{n}$ is again the size of the number in bits. Similarly, the Jacobi symbol and modular exponential can both also be run in $O(log{n})$ time, so the final complexity is:
+\[
+    O(k * log{n} * log{n} * log{n}) = O(k * log^3{n})
+\]
 
 \subsection{Miller-Rabin Primality Test}
+Similar to the Euler (Solovay-Strassen) test, the Miller-Rabin test runs in $O(k * log^3{n})$ time, due again to the modular exponentiation operations.
 
 \subsection{AKS Primality Test}
+The AKS paper originally detailed the time complexity of the algorithm as $\widetilde{O}(log(n)^{12})$ with the use of fast modular exponentiation techniques (like repeated squaring). However, the paper was later revised to give the time complexity $\widetilde{O}(log(n)^{15/2})$ based on new proofs.
+
+In 2005, after Pomerance and Lenstra developed an AKS variant with a running time of $\widetilde{O}(log(n)^{6})$, the paper was again updated.
 
 \section{Probabilistic AKS}
 
+\subsection{Effects on Pseudoprimes}
+
+\subsection{Running Time}
+
 \section{Methods}
-Methods
+The primality tests were subject to a standardized analysis over fifty trials; the raw data is available in Appendix \ref{appendix:data}. For the probablistic tests, each trial tested a different $k$ value, and consisted of:
 
-See Appendix \ref{appendix:tech} for primality test implementation details and hardware specifications.
-
-\subsection{Base Analysis}
-The primality tests were subject to a standardized analysis over fifty trials; the raw data is available in Appendix \ref{appendix:data}. For the probablistic tests, each trial tested a different $k$ value, and consisted of: % TODO: Note differences in testing method with AKS due to no base available
 \begin{itemize}
-    \item{Generating a random set ($S$) of $10^4$ odd integers such that $10^5 < x < 10^6$}
+    \item{Generating a random set ($S$) of $10^4$ odd integers such that $10^5 < x < 10^6$. This interval was chosen due to higher concentrations of pseudoprimes found for meaningful data comparisons between each trial.}
     \item{Using Sympy's \texttt{is\_prime} (which runs a variant of the Baillie-Pomerance-Selfridge-Wagstaff probablistic primality test) to check for primality for each integer in $S$}
     \item{Running the primality test with $k$ attempts run on each integer in $S$ with respect to some base $a$}
     \item{Counting all pseudoprimes which passed the primality test but not Sympy's primality test}
     \item{Return lowest number of bases tried (lowest $k$) that returned the lowest number of pseudoprimes passed, the maximum and minimum number of pseudoprimes, and the average pseudoprimes found}
 \end{itemize}
+
 $a$ was a choice of either all random bases, 2, 3, 5, and a pair of 2, 3, or 5. Each trial was timed with the Python \texttt{timeit} command, recording the total wall time elapsed. 
 
 Note that for deterministic AKS, the testing method consisted of running a single trial over the random set $S$.
 
+The raw data of each of the primality tests can be found in Appendix \ref{appendix:data}.
+% TODO: finding all pseudoprimes identified between some other interval
+See Appendix \ref{appendix:tech} for primality test implementation details and hardware specifications.
+
 \section{Results}
 Simplified tables and synthesized figures
-
-The raw data of each of the primality tests are shown in Tables \ref{table:fermat}, \ref{table:euler}, \ref{table:mr}, \ref{table:aks} in Appendix \ref{appendix:data}.
 
 \section{Discussion}
 Discussion of results
 
+\subsection{Sources of Error}
+A possible source of error present includes the range of numbers tested for pseudoprimes and the distribution of pseudoprimes over said range. % TODO: https://cr.yp.to/bib/1980/pomerance-pseudo.pdf
+As Pomerance, Selfridge, and Wagstaff showed in their 1980 analysis on pseudoprimes to $25 * 10^9$, there are 167 Fermat pseudoprimes, 78 Euler psuedoprimes, and 30 strong (Miller-Rabin) pseudoprimes between $10^5$ and $10^6$. In larger intervals between larger numbers, the amount of these pseudoprimes grows. However, with larger intervals, the probability of randomly selecting pseudoprimes within $10^4$ choices decreases. Increasing the bounds of the tests was outside the scope of this examination, but may be left to future research. Running the primality tests over a larger interval of larger numbers with a higher amount of choices may improve this analysis. 
+
 \section{Conclusion}
-Conclusion
+Conclusion + propose further inquiry
 
 \nocite{*}
 \bibliographystyle{plainnat}
@@ -234,287 +255,17 @@ Conclusion
 \appendix
 \begin{appendices}
 \section{Raw Data for Primality Tests} \label{appendix:data}
-% TODO: Explain row and column interpretation for the CSVs, link them somewhere
-% TODO: Reformat to reference CSVs
 
-\subsection{Fermat's Primality Test}
-\FloatBarrier
-\begin{longtable}{llll}
-\caption{Raw data for Fermat's Primality Test Trials\label{table:fermat}}\\
-\toprule
-                                       & \multicolumn{3}{l}{All Random Bases}   \endfirsthead
-\midrule
-                                       & Trial 1   & Trial 2  & Trial 3         \\
-Running Time                           & 0m8.934s  & 0m9.884s & 0m10.670s       \\
-Lowest k required                      & 2         & 2        & 3               \\
-Pseudoprimes passed at lowest k        & 0         & 0        & 0               \\
-Average pseudoprimes passed            & 0.0606    & 0.08080  & 0.0909          \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{1}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 2}             \\
-\midrule
-                                       & Trial 1   & Trial 2  & Trial 3         \\
-Running Time                           & 0m6.881s  & 0m6.233s & 0m6.487s        \\
-Lowest k required                      & 61        & 14       & 47              \\
-Pseudoprimes passed at lowest k        & 0         & 0        & 0               \\
-Average pseudoprimes passed            & 3.8989    & 3.9090   & 4.0303          \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{47}                 \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 3}             \\
-\midrule
-                                       & Trial 1   & Trial 2  & Trial 3         \\
-Running Time                           & 0m6.710s  & 0m5.965s & 0m6.912s        \\
-Lowest k required                      & 21        & 6        & 52              \\
-Pseudoprimes passed at lowest k        & 0         & 0        & 0               \\
-Average pseudoprimes passed            & 3.3434    & 3.9292   & 3.4040          \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{46}                 \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 5}             \\
-\midrule
-                                       & Trial 1   & Trial 2  & Trial 3         \\
-Running Time                           & 0m7.535s  & 0m6.277s & 0m6.064s        \\
-Lowest k required                      & 25        & 19       & 41              \\
-Pseudoprimes passed at lowest k        & 0         & 0        & 0               \\
-Average pseudoprimes passed            & 3.4646    & 3.5858   & 3.7474          \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{22}                 \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 2 and Base 3}  \\
-\midrule
-                                       & Trial 1   & Trial 2  & Trial 3         \\
-Running Time                           & 0m9.046s  & 0m8.423s & 0m7.899s        \\
-Lowest k required                      & 2         & 5        & 2               \\
-Pseudoprimes passed at lowest k        & 0         & 0        & 0               \\
-Average pseudoprimes passed            & 0.8787    & 0.8282   & 0.8888          \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{3}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 3 and Base 5}  \\
-\midrule
-                                       & Trial 1   & Trial 2  & Trial 3         \\
-Running Time                           & 0m8.304s  & 0m8.838s & 0m7.616s        \\
-Lowest k required                      & 4         & 1        & 2               \\
-Pseudoprimes passed at lowest k        & 0         & 0        & 0               \\
-Average pseudoprimes passed            & 0.7474    & 0.8888   & 0.7171          \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{3}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 2 and Base 5}  \\
-\midrule
-                                       & Trial 1   & Trial 2  & Trial 3         \\
-Running Time                           & 0m10.217s & 0m8.388s & 0m8.096s        \\
-Lowest k required                      & 2         & 11       & 2               \\
-Pseudoprimes passed at lowest k        & 0         & 0        & 0               \\
-Average pseudoprimes passed            & 0.7777    & 0.9696   & 0.6868          \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{9}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\bottomrule
-\end{longtable}
-\FloatBarrier
+The raw data for each of the primality tests can be found \href{https://github.com/kewbish/srs/tree/master/scripts/dataset}{here}. % TODO: Ensure correct link if I restructure files
+The data is available in CSV format, labelled by primality test (Fermat, Euler, Miller-Rabin, deterministic AKS, and probablistic AKS) and base analysis type (all bases generated randomly, base 2, base 3, base 5, or a combination of bases 2 and 3, bases 3 and 5, and bases 2 and 3).
 
-\subsection{Euler's (Solovay-Strassen) Primality Test}
-\FloatBarrier
-\begin{longtable}{llll}
-\caption{Raw data for Euler (Solovay-Strassen) Primality Test Trials\label{table:euler}}\\
-\toprule
-                                       & \multicolumn{3}{l}{All Random Bases}   \endfirsthead
-\midrule
-                                       & Trial 1  & Trial 2  & Trial 3          \\
-Running Time                           & 0m4.859s & 0m5.044s & 0m4.888s         \\
-Lowest k required                      & 3        & 2        & 1                \\
-Pseudoprimes passed at lowest k        & 0        & 0        & 0                \\
-Average pseudoprimes passed            & 0.0202   & 0.0404   & 0.0000           \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{2}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 2}             \\
-\midrule
-                                       & Trial 1  & Trial 2  & Trial 3          \\
-Running Time                           & 0m5.026s & 0m5.925s & 0m5.145s         \\
-Lowest k required                      & 1        & 1        & 4                \\
-Pseudoprimes passed at lowest k        & 0        & 0        & 0                \\
-Average pseudoprimes passed            & 1.3333   & 1.6262   & 1.4747           \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{3}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 3}             \\
-\midrule
-                                       & Trial 1  & Trial 2  & Trial 3          \\
-Running Time                           & 0m6.710s & 0m6.443s & 0m4.905s         \\
-Lowest k required                      & 3        & 3        & 3                \\
-Pseudoprimes passed at lowest k        & 0        & 0        & 0                \\
-Average pseudoprimes passed            & 1.6464   & 1.5050   & 1.3737           \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{0}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 5}             \\
-\midrule
-                                       & Trial 1  & Trial 2  & Trial 3          \\
-Running Time                           & 0m5.031s & 0m6.367s & 0m4.978s         \\
-Lowest k required                      & 6        & 2        & 7                \\
-Pseudoprimes passed at lowest k        & 0        & 0        & 0                \\
-Average pseudoprimes passed            & 1.7979   & 1.4242   & 1.3535           \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{5}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 2 and Base 3}  \\
-\midrule
-                                       & Trial 1  & Trial 2  & Trial 3          \\
-Running Time                           & 0m8.009s & 0m7.581s & 0m7.025s         \\
-Lowest k required                      & 1        & 1        & 1                \\
-Pseudoprimes passed at lowest k        & 0        & 0        & 0                \\
-Average pseudoprimes passed            & 0.3030   & 0.4949   & 0.2626           \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{0}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 3 and Base 5}  \\
-\midrule
-                                       & Trial 1  & Trial 2  & Trial 3          \\
-Running Time                           & 0m8.597s & 0m6.908s & 0m6.757s         \\
-Lowest k required                      & 1        & 2        & 1                \\
-Pseudoprimes passed at lowest k        & 0        & 0        & 0                \\
-Average pseudoprimes passed            & 0.1414   & 0.1818   & 0.2222           \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{1}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 2 and Base 5}  \\
-\midrule
-                                       & Trial 1  & Trial 2  & Trial 3          \\
-Running Time                           & 0m8.354s & 0m6.952s & 0m6.849s         \\
-Lowest k required                      & 1        & 1        & 2                \\
-Pseudoprimes passed at lowest k        & 0        & 0        & 0                \\
-Average pseudoprimes passed            & 0.2323   & 0.2222   & 0.3333           \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{1}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\bottomrule
-\end{longtable}
-\FloatBarrier
-
-\subsection{Miller-Rabin's Primality Test}
-\FloatBarrier
-\begin{longtable}{llll}
-\caption{Raw data for Miller-Rabin Primality Test Trials\label{table:mr}}\\
-\toprule
-                                       & \multicolumn{3}{l}{All Random Bases}   \endfirsthead
-\midrule
-                                       & Trial 1  & Trial 2  & Trial 3          \\
-Running Time                           & 0m7.274s & 0m7.391s & 0m7.806s         \\
-Lowest k required                      & 1        & 2        & 2                \\
-Pseudoprimes passed at lowest k        & 0        & 0        & 0                \\
-Average pseudoprimes passed            & 0.0000   & 0.0101   & 0.0202           \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{1}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 2}             \\
-\midrule
-                                       & Trial 1  & Trial 2  & Trial 3          \\
-Running Time                           & 0m5.780s & 0m6.143s & 0m6.181s         \\
-Lowest k required                      & 2        & 1        & 3                \\
-Pseudoprimes passed at lowest k        & 0        & 0        & 0                \\
-Average pseudoprimes passed            & 1.2222   & 1.0101   & 1.0303           \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{2}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 3}             \\
-\midrule
-                                       & Trial 1  & Trial 2  & Trial 3          \\
-Running Time                           & 0m5.651s & 0m5.768s & 0m7.215s         \\
-Lowest k required                      & 1        & 4        & 1                \\
-Pseudoprimes passed at lowest k        & 0        & 0        & 0                \\
-Average pseudoprimes passed            & 1.0808   & 0.8080   & 0.7575           \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{3}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 5}             \\
-\midrule
-                                       & Trial 1  & Trial 2  & Trial 3          \\
-Running Time                           & 0m5.676s & 0m5.707s & 0m6.111s         \\
-Lowest k required                      & 1        & 12       & 13               \\
-Pseudoprimes passed at lowest k        & 0        & 0        & 0                \\
-Average pseudoprimes passed            & 1.0808   & 1.1919   & 1.2727           \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{12}                 \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 2 and Base 3}  \\
-\midrule
-                                       & Trial 1  & Trial 2  & Trial 3          \\
-Running Time                           & 0m8.059s & 0m8.315s & 0m8.202s         \\
-Lowest k required                      & 1        & 1        & 1                \\
-Pseudoprimes passed at lowest k        & 0        & 0        & 0                \\
-Average pseudoprimes passed            & 0.0303   & 0.0808   & 0.0808           \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{0}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 3 and Base 5}  \\
-\midrule
-                                       & Trial 1  & Trial 2  & Trial 3          \\
-Running Time                           & 0m8.132s & 0m8.172s & 0m8.314s         \\
-Lowest k required                      & 1        & 1        & 1                \\
-Pseudoprimes passed at lowest k        & 0        & 0        & 0                \\
-Average pseudoprimes passed            & 0.1111   & 0.1111   & 0.1010           \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{0}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\midrule
-                                       & \multicolumn{3}{l}{Base 2 and Base 5}  \\
-\midrule
-                                       & Trial 1  & Trial 2  & Trial 3          \\
-Running Time                           & 0m8.321s & 0m8.463s & 0m8.752s         \\
-Lowest k required                      & 1        & 1        & 1                \\
-Pseudoprimes passed at lowest k        & 0        & 0        & 0                \\
-Average pseudoprimes passed            & 0.0505   & 0.0606   & 0.0808           \\
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{0}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                  \\
-\bottomrule
-\end{longtable}
-\FloatBarrier
-
-\subsection{Probabilistic AKS Primality Test}
-\FloatBarrier
-\begin{longtable}{llll}
-\caption{Raw data for Probabilistic AKS Primality Test Trials\label{table:aks}}\\ 
-\toprule
-                                       & \multicolumn{3}{l}{1 Equation Tested}  \endfirsthead 
-\midrule
-                                       & Trial 1   & Trial 2   & Trial 3        \\
-Running Time                           & 1m22.615s & 1m30.450s & 1m22.402s      \\
-Lowest k required                      & 1         & 1         & 1              \\
-Pseudoprimes passed at lowest k        & 0         & 0         & 0              \\
-Average pseudoprimes passed            & 0.0000    & 0.0000    & 0.0000         \\ 
-\cmidrule(lr){2-4}
-Range of lowest k required             & \multicolumn{3}{l}{0}                  \\
-Range of number of pseudoprimes passed & \multicolumn{3}{l}{0}                 
-\end{longtable}
-\FloatBarrier
+Each row in the CSV file is a trial of the given test with given base. The first hundred columns represent the pseudoprimes found at $k$ trials of different bases. The last four columns represent the average pseudoprimes found over the entire trial from $1 <= k <= 100$, the lowest $k$ value required to pass the lowest number of pseudoprimes, the lowest number of pseudoprimes, and the time required to run the test in minutes and seconds. 
 
 \section{Technical Details} \label{appendix:tech}
 
 \subsection{Primality Test Implementations}
 The implementations of the primality tests can be found on GitHub at kewbish/srs. % TODO: citation on GitHub
-The tests were implemented with Python 3.7, with the Numpy and Numba libraries used to optimize computations.
+The tests were implemented with Python 3.7, with the Numpy and Numba libraries used to optimize computations, and the Sympy library used to test for primality.
 The AKS primality test implementation was iterated on from a reference implementation by Sophoclis Stephanou was found on GitHub. % TODO: citation
 
 \subsection{Hardware}
