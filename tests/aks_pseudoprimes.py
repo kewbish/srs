@@ -3,6 +3,7 @@ import numpy as np
 from sympy import isprime
 from sys import argv
 from template_pprimes import gen_randints
+from timeit import default_timer
 
 
 def aks_pprimes(k) -> float:
@@ -17,10 +18,16 @@ def aks_pprimes(k) -> float:
 if __name__ == "__main__":
 
     def main():
+        start = default_timer()
         print(argv)
-        results = np.array(aks_pprimes(1))
-        print(np.average(results))
+        ints = np.arange(1, 15)
+        results = np.array([aks_pprimes(n) for n in ints])
+        print(repr(results))
+        print(round(np.average(results), 4))
         print((ints[np.argmin(results)], np.min(results)))
-        print(np.min(results), np.max(results))
+        end = default_timer()
+        m, s = divmod(end - start, 60)
+        print(f"{round(m)}m{round(s, 4)}s")
+        print("\n")
 
     main()

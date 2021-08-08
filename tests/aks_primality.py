@@ -92,7 +92,6 @@ def aks_primality(n: int) -> bool:
     elif n % 2 == 0:
         return False
 
-    print(n)
     if is_perfect_power(n):  # step 1
         return False
 
@@ -105,11 +104,11 @@ def aks_primality(n: int) -> bool:
     if n <= r:  # step 4
         return True
 
-    for a in range(1, floor((phi(r)) ** (1 / 2) * np.log2(n))):  # step 5
+    for a in range(1, r ** (1 / 2) * np.log2(n)):  # step 5
         x = poly_mod(np.array([a, 1]), n, r)
-        if np.any(x):
-            return False
-    return True
+        if np.all(x):
+            return True
+    return False
 
 
 @vectorize
@@ -121,6 +120,8 @@ def aks_probablistic(n: int, k: int) -> bool:
     elif n % 2 == 0:
         return False
 
+    print(n)
+
     if is_perfect_power(n):  # step 1
         return False
 
@@ -133,15 +134,17 @@ def aks_probablistic(n: int, k: int) -> bool:
     if n <= r:  # step 4
         return True
 
-    k_max = floor((phi(r)) ** (1 / 2) * np.log2(n))
+    k_max = floor(
+        r ** (1 / 2) * np.log2(n)
+    )  # https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.455.5241&rep=rep1&type=pdf
     if k > k_max:
         k = k_max
     a_arr = np.random.randint(1, k_max, k)
     for a in a_arr:  # step 5
         x = poly_mod(np.array([a, 1]), n, r)
-        if np.any(x):
-            return False
-    return True
+        if np.all(x):
+            return True
+    return False
 
 
 if __name__ == "__main__":
