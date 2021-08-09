@@ -9,7 +9,7 @@
 
 \graphicspath{{media/}}
 
-\title[Primality Testing]{Primality Testing}
+\title[Primality Testing]{Probablistic Primality Testing and Analysis of Probablistic AKS}
 \author[Emilie Ma]{%
 Emilie Ma\\%
 University of British Columbia\\%
@@ -217,29 +217,74 @@ In 2005, after Pomerance and Lenstra developed an AKS variant with a running tim
 \subsection{Running Time}
 
 \section{Methods}
-The primality tests were subject to a standardized analysis over fifty trials; the raw data is available in Appendix \ref{appendix:data}. For the probablistic tests, each trial tested a different $k$ value, and consisted of:
+The primality tests were subject to a similar analysis method over multiple trials; the raw data is available in Appendix \ref{appendix:data}. For the probablistic tests, each trial tested a different $k$ value, and consisted of:
 
 \begin{itemize}
-    \item{Generating a random set ($S$) of $10^4$ odd integers such that $10^5 < x < 10^6$. This interval was chosen due to higher concentrations of pseudoprimes found for meaningful data comparisons between each trial.}
+    \item{Generating a random set ($S$) of $10^4$ odd integers such that $10^5 < x < 10^6$. This interval was chosen due to an intersection of higher concentrations of pseudoprimes found for meaningful data comparisons between each trial and reasonable running times for the trials conducted.}
     \item{Using Sympy's \texttt{is\_prime} (which runs a variant of the Baillie-Pomerance-Selfridge-Wagstaff probablistic primality test) to check for primality for each integer in $S$}
     \item{Running the primality test with $k$ attempts run on each integer in $S$ with respect to some base $a$}
     \item{Counting all pseudoprimes which passed the primality test but not Sympy's primality test}
     \item{Return lowest number of bases tried (lowest $k$) that returned the lowest number of pseudoprimes passed, the maximum and minimum number of pseudoprimes, and the average pseudoprimes found}
 \end{itemize}
 
-$a$ was a choice of either all random bases, 2, 3, 5, and a pair of 2, 3, or 5. Each trial was timed with the Python \texttt{timeit} command, recording the total wall time elapsed. 
+Each trial was timed with the Python \texttt{timeit} command, recording the total wall time elapsed. Data for average time taken per $k$ value was collected in a similar way. 
 
-Note that for deterministic AKS, the testing method consisted of running a single trial over the random set $S$.
+For the Fermat, Euler (Solovay-Strassen), and Miller-Rabin tests, the results of fifty trials were recorded, ranging from $k = 1$ to $k = 100$.
+
+Note that for deterministic AKS, the testing method consisted of running a single trial over a random set $S$, within the same bounds, but with $10^3$ integers tested, for practicality reasons. A trial of $10^4$ random integers at that range took around 118 min, and fifty trials would have been impractical for the scope of this inquiry.
+
+For probablistic AKS, the testing method consisted of running fifty trials over the random set $S$. However, $k$ only ranges from $1 <= k <= 5$, again for practical reasons. During analysis, a trial of the first $10^4$ integers with $k = 50$ took over \iffalse TODO: add time \fi min.
 
 The raw data of each of the primality tests can be found in Appendix \ref{appendix:data}.
-% TODO: finding all pseudoprimes identified between some other interval
 See Appendix \ref{appendix:tech} for primality test implementation details and hardware specifications.
 
 \section{Results}
-Simplified tables and synthesized figures
+For the Fermat, Euler (Solovay-Strassen), and Miller-Rabin tests, the results of trials ranging from $k = 1$ to $k = 50$ are shown. For $k$ values greater than 50, it was found that pseudoprimes were found very rarely (around 5 pseudoprimes found in total over 50 trials of $50 <= k <= 100$) across all three tests. Additional base analysis data can be found in Appendix \ref{appendix:data}.
+
+In Figure \ref{fig:pprimes_v_bases}, the average number of pseudoprimes passed per $k$ bases tested is shown. All test exhibit a similar pattern of passing larger number of pseudoprimes with lower amounts of bases tested $k$. The Fermat primality test passed the most pseudoprimes, with an average of 6.5 pseudoprimes at $k = 1$. The Euler (Solovay-Strassen) test passed an average of 3.2 pseudoprimes at $k = 1$, while the Miller-Rabin test passed a similar average of 3.3. The Fermat primality test has low ($<0.1$) average numbers of pseudoprimes passed beginning around $k = 25$. The Euler test passes low numbers of pseudoprimes at around $k = 5$, and at $k = 3$, the Miller-Rabin test begins to pass low numbers of pseudoprimes. Both the Euler and Miller-Rabin tests pass consistent averages of 0 pseudoprimes after their respective drop-off points; however, the Fermat test wavers around 0 to 0.1 pseudoprimes passed for all trials after $k = 25$.
+
+Figure \ref{fig:time_v_bases} shows the time elapsed for $k$ base trials over $k$ bases tested.
+
+\FloatBarrier
+\begin{figure}[h!]
+\label{fig:pprimes_v_bases}
+\caption{The effect of increasing the number of base trials $k$ on pseudoprimes passed}
+\centering
+\includegraphics[width=0.8\textwidth]{pprimes_v_bases}
+\end{figure}
+\FloatBarrier
+
+\FloatBarrier
+\begin{figure}[h!]
+\label{fig:time_v_bases}
+\caption{The effect of increasing the number of base trials $k$ on running time elapsed}
+\centering
+\includegraphics[width=0.8\textwidth]{time_v_bases}
+\end{figure}
+\FloatBarrier
+
+\FloatBarrier
+\begin{figure}[h!]
+\label{fig:pprimes_v_trial}
+\caption{Average pseudoprimes passed across all $1 <= k <= 50$ values per trial}
+\centering
+\includegraphics[width=0.8\textwidth]{pprimes_v_trial}
+\end{figure}
+\FloatBarrier
+
+\FloatBarrier
+\begin{figure}[h!]
+\label{fig:time_v_trial}
+\caption{Running time elapsed across all $1 <= k <= 50$ values per trial}
+\centering
+\includegraphics[width=0.8\textwidth]{time_v_trial}
+\end{figure}
+\FloatBarrier
+
+% TODO: det AKS vs prob AKS
 
 \section{Discussion}
-Discussion of results
+Note that as the determinism of AKS under the small interval used for testing has already been proven, the . Trials run on 
 
 \subsection{Sources of Error}
 A possible source of error present includes the range of numbers tested for pseudoprimes and the distribution of pseudoprimes over said range. % TODO: https://cr.yp.to/bib/1980/pomerance-pseudo.pdf
@@ -257,9 +302,10 @@ Conclusion + propose further inquiry
 \section{Raw Data for Primality Tests} \label{appendix:data}
 
 The raw data for each of the primality tests can be found \href{https://github.com/kewbish/srs/tree/master/scripts/dataset}{here}. % TODO: Ensure correct link if I restructure files
-The data is available in CSV format, labelled by primality test (Fermat, Euler, Miller-Rabin, deterministic AKS, and probablistic AKS) and base analysis type (all bases generated randomly, base 2, base 3, base 5, or a combination of bases 2 and 3, bases 3 and 5, and bases 2 and 3).
+The data is available in CSV format, labelled by primality test (Fermat, Euler, Miller-Rabin, deterministic AKS, and probablistic AKS). The folder also includes other data not discussed in-depth in this paper, including several base analysis types (all bases generated randomly, base 2, base 3, base 5, or a combination of bases 2 and 3, bases 3 and 5, and bases 2 and 3).
 
 Each row in the CSV file is a trial of the given test with given base. The first hundred columns represent the pseudoprimes found at $k$ trials of different bases. The last four columns represent the average pseudoprimes found over the entire trial from $1 <= k <= 100$, the lowest $k$ value required to pass the lowest number of pseudoprimes, the lowest number of pseudoprimes, and the time required to run the test in minutes and seconds. 
+The last row, which contains only 50 values, should be interpreted as the average time taken for a trial of $k$ bases, where $k$ is the column number.
 
 \section{Technical Details} \label{appendix:tech}
 
