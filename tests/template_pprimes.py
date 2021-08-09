@@ -3,7 +3,7 @@ import numpy as np
 from random import randrange
 from sympy import isprime
 from sys import argv
-from timeit import default_timer
+from timeit import default_timer, timeit
 
 
 @njit
@@ -44,6 +44,13 @@ def output(fn) -> None:
     m, s = divmod(end - start, 60)
     print(f"{round(m)}m{round(s, 4)}s")
     print("\n")
+
+
+def time_output(fn) -> None:
+    print(argv)
+    results = np.array([timeit(lambda: template_pprimes(k, fn), number=50) for k in range(51)])
+    print(repr(results))
+    print(",".join([str(r) for r in results]))
 
 
 if __name__ == "__main__":

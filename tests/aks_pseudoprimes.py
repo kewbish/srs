@@ -1,4 +1,4 @@
-from aks_primality import aks_probablistic
+from aks_primality import aks_probablistic, aks_primality
 import numpy as np
 from sympy import isprime
 from sys import argv
@@ -20,8 +20,9 @@ if __name__ == "__main__":
     def main():
         start = default_timer()
         print(argv)
-        ints = np.arange(1, 15)
-        results = np.array([aks_pprimes(n) for n in ints])
+        results = np.array([aks_primality(n) for n in gen_randints()])
+        print(results)
+        # results = np.array([aks_pprimes(n) for n in ints])
         print(repr(results))
         print(round(np.average(results), 4))
         print((ints[np.argmin(results)], np.min(results)))

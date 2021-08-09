@@ -120,8 +120,6 @@ def aks_probablistic(n: int, k: int) -> bool:
     elif n % 2 == 0:
         return False
 
-    print(n)
-
     if is_perfect_power(n):  # step 1
         return False
 
