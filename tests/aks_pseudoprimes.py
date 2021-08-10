@@ -1,9 +1,15 @@
 from aks_primality import aks_probablistic, aks_primality
+from numba import njit, vectorize
 import numpy as np
+from random import randrange
 from sympy import isprime
 from sys import argv
-from template_pprimes import gen_randints
 from timeit import default_timer
+
+
+@njit
+def gen_randints() -> np.ndarray:
+    return np.array([randrange(10 ** 5 + 1, 10 ** 6 + 1, 2) for _ in range(10 ** 2)])
 
 
 def aks_pprimes(k) -> float:
@@ -20,9 +26,8 @@ if __name__ == "__main__":
     def main():
         start = default_timer()
         print(argv)
-        results = np.array([aks_primality(n) for n in gen_randints()])
-        print(results)
-        # results = np.array([aks_pprimes(n) for n in ints])
+        ints = np.arange(1, 11)
+        results = np.array([aks_pprimes(n) for n in ints])
         print(repr(results))
         print(round(np.average(results), 4))
         print((ints[np.argmin(results)], np.min(results)))
