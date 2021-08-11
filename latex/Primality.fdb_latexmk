@@ -1,16 +1,16 @@
 # Fdb version 3
-["bibtex Primality"] 1628555924 "Primality.aux" "Primality.bbl" "Primality" 1628563815
-  "/usr/share/texmf-dist/bibtex/bst/natbib/plainnat.bst" 1617738065 26816 ffe5423d2019860bad9f54bc402fac15 ""
-  "Primality.aux" 1628563815 5215 62fb91def6eeb67b1223c5b624de5462 "xelatex"
-  "references.bib" 1627612271 0 d41d8cd98f00b204e9800998ecf8427e ""
+["bibtex Primality"] 1628650609 "Primality.aux" "Primality.bbl" "Primality" 1628650683
+  "/usr/share/texmf-dist/bibtex/bst/base/plain.bst" 1617738065 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
+  "Primality.aux" 1628650682 7537 a9fb749287efa6b31862cbc02661e908 "xelatex"
+  "references.bib" 1628650636 6911 4ecc4cbfff86e62aa167ded0ed4fa698 ""
   (generated)
   "Primality.bbl"
   "Primality.blg"
-["xdvipdfmx"] 1628563815 "Primality.xdv" "Primality.pdf" "Primality" 1628563816
-  "Primality.xdv" 1628563815 276300 07c8c5e3a342015c0f92033c7a9dc07a "xelatex"
+["xdvipdfmx"] 1628650683 "Primality.xdv" "Primality.pdf" "Primality" 1628650683
+  "Primality.xdv" 1628650682 482872 9fc886103922c011f1ec07c4b25880ec "xelatex"
   (generated)
   "Primality.pdf"
-["xelatex"] 1628563814 "Primality.tex" "Primality.xdv" "Primality" 1628563815
+["xelatex"] 1628650681 "Primality.tex" "Primality.xdv" "Primality" 1628650683
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1617738065 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1617738065 1528 f853c4d1b4e0550255e02831fdc8496f ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1617738065 1004 54797486969f23fa377b128694d548df ""
@@ -95,18 +95,22 @@
   "/usr/share/texmf-dist/tex/latex/url/url.sty" 1617738065 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1617738065 39911 2da6c67557ec033436fe5418a70a8a61 ""
   "/var/lib/texmf/web2c/xetex/xelatex.fmt" 1625271328 5486158 48fbda787d0cbe7ead9466a5598c3f98 ""
-  "Primality.aux" 1628563815 5215 62fb91def6eeb67b1223c5b624de5462 "xelatex"
-  "Primality.bbl" 1628555924 275 de5ffaf5b665b622658d80bed97ba2a5 "bibtex Primality"
-  "Primality.out" 1628563815 3742 88c93bcc89e360db3392d9bb4ede0bce "xelatex"
-  "Primality.tex" 1628563813 32516 f6dcec399ee9e324e985bd7dbc78f48c ""
+  "Primality.aux" 1628650682 7537 a9fb749287efa6b31862cbc02661e908 "xelatex"
+  "Primality.bbl" 1628650609 1962 9f2f64437e3377ecfb537bdd6601181e "bibtex Primality"
+  "Primality.out" 1628650682 3715 6baf5dc7f9eb21137afffb039bb1b47b "xelatex"
+  "Primality.tex" 1628650679 53258 ee6ed091ae97f734e269df569addaed8 ""
   "media//UchIMI-logo-Kalina-all.jpg" 1627418608 101455 e050243c462b237e2ddc92b22cdbbeb2 ""
+  "media//paks_pprimes_v_bases.png" 1628614238 18340 5f89d6eb78e4a114c1eb53e3b6b56b7b ""
+  "media//paks_proj_pprimes_v_bases.png" 1628614306 24255 e6d33fd5dbdb2157c40e8129e50e4d0c ""
+  "media//paks_v_daks.png" 1628620882 36358 dc61e8f74abb81bc93caf1af033383e0 ""
+  "media//pprimes_passed.png" 1628628098 33220 3dd0d8f27ac649422d575be6531750c5 ""
   "media//pprimes_v_bases.png" 1628476752 27539 f5501536ad2b237fe094ec73e1865937 ""
   "media//pprimes_v_trial.png" 1628476770 56520 2a5873eaab18ac97a3a5747e68b5c8a0 ""
-  "media//time_v_bases.png" 1628476795 45715 cd2a3dd7098aa90486dc972c62403a93 ""
-  "media//time_v_trial.png" 1628476780 42345 3e5adf4c5038c1e1ef89d8a1c509805c ""
+  "media//time_v_bases.png" 1628620901 53054 24485ae57608a180499696e5e3626a30 ""
+  "media//time_v_trial.png" 1628620911 42655 b113c761f1c304b8d24ee74b58ac3f3f ""
   "style.sty" 1628357930 10065 4bc4a8e9449578e38c161969a8d8ec62 ""
   (generated)
+  "Primality.xdv"
   "Primality.log"
   "Primality.aux"
-  "Primality.xdv"
   "Primality.out"

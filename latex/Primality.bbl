@@ -1,8 +1,56 @@
-\begin{thebibliography}{0}
-\providecommand{\natexlab}[1]{#1}
-\providecommand{\url}[1]{\texttt{#1}}
-\expandafter\ifx\csname urlstyle\endcsname\relax
-  \providecommand{\doi}[1]{doi: #1}\else
-  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+\begin{thebibliography}{10}
+
+\bibitem{agrawal_primes_2004}
+Manindra Agrawal, Neeraj Kayal, and Nitin Saxena.
+\newblock {PRIMES} is in {P}.
+\newblock {\em Annals of Mathematics}, 160(2):781--793, September 2004.
+
+\bibitem{brent_primality_2010}
+Richard~P Brent.
+\newblock {\em Primality {Testing}}.
+\newblock Thesis, Australian National University, Mathematical Sciences
+  Institute and College of Engineering and Computer Science, August 2010.
+
+\bibitem{lenstra_jr._primality_2005}
+Hendrik Lenstra, Jr. and Carl Pomerance.
+\newblock Primality testing with {Gaussian} periods.
+\newblock July 2005.
+
+\bibitem{monier_evaluation_1980}
+Louis Monier.
+\newblock Evaluation and comparison of two efficient probabilistic primality
+  testing algorithms.
+\newblock {\em Theoretical Computer Science}, 12(1):97--108, September 1980.
+
+\bibitem{nemana_empirical_2016}
+Lalitha~Kiran Nemana and V.~Ch Venkaiah.
+\newblock An empirical study towards refining the aks primality testing
+  algorithm.
+\newblock Technical Report 362, 2016.
+
+\bibitem{pomerance_pseudoprimes_1980}
+Carl Pomerance, J.~L. Selfridge, and Samuel~S Wagstaff.
+\newblock The {Pseudoprimes} to 25 • 10{\textasciicircum}9.
+\newblock {\em Mathematics of Computation}, 35(151):1003--1026, July 1980.
+
+\bibitem{rotella_efficient_2005}
+Chris Rotella.
+\newblock {\em An {Efficient} {Implementation} of the {AKS} {Polynomial}-{Time}
+  {Primality} {Proving} {Algorithm}}.
+\newblock Thesis, Carnegie Mellon University, May 2005.
+
+\bibitem{stephanou_ssophoclis/aks-algorithm:_2020}
+Sophoclis Stephanou.
+\newblock Ssophoclis/{AKS}-algorithm: {Implementation} of the {AKS} primality
+  test algorithm in python., July 2020.
+
+\bibitem{sympy_number_2021}
+SymPy~Development Team.
+\newblock Number {Theory} — {SymPy} 1.8 documentation, April 2021.
+
+\bibitem{terzian_aks_2013}
+Tammy Terzian.
+\newblock {\em The {AKS} {Primality} {Test}}.
+\newblock Thesis, The California State University, October 2013.
 
 \end{thebibliography}
