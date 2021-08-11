@@ -4,7 +4,7 @@ import numpy as np
 from random import randrange
 from sympy import isprime
 from sys import argv
-from timeit import default_timer
+from timeit import default_timer, timeit
 
 
 @njit
@@ -14,6 +14,7 @@ def gen_randints() -> np.ndarray:
 
 def aks_pprimes(k) -> float:
     pprimes = 0
+    print(k)
     for n in gen_randints():
         res = aks_probablistic(n, k)
         if res and not isprime(n):
@@ -35,5 +36,10 @@ if __name__ == "__main__":
         m, s = divmod(end - start, 60)
         print(f"{round(m)}m{round(s, 4)}s")
         print("\n")
+
+    def time_main():
+        results = np.array([timeit(lambda: aks_pprimes(k), number=15) for k in range(1, 20)])
+        print(repr(results))
+        print(",".join([str(r) for r in results]))
 
     main()

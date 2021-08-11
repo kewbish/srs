@@ -16,7 +16,5 @@ if __name__ == "__main__":
         end = default_timer()
         m, s = divmod(end - start, 60)
         print(f"{round(m)}m{round(s, 4)}s")
-        print(p_aks_res)
-        print(d_aks_res)
 
     main()
