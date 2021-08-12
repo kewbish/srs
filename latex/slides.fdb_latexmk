@@ -1,16 +1,16 @@
 # Fdb version 3
-["bibtex slides"] 1628726349 "slides.aux" "slides.bbl" "slides" 1628726355
+["bibtex slides"] 1628737318 "slides.aux" "slides.bbl" "slides" 1628737488
   "/usr/share/texmf-dist/bibtex/bst/base/plain.bst" 1617738065 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "references.bib" 1628650724 6911 4ecc4cbfff86e62aa167ded0ed4fa698 ""
-  "slides.aux" 1628726354 15203 8fc8ca93b8d8e118ceaa9c0cf976a7cc "xelatex"
+  "references.bib" 1628727149 8222 a10584bac67412b61841715c390329a8 ""
+  "slides.aux" 1628737487 13272 7fe6182b74ad39570703c07021297c0d "xelatex"
   (generated)
-  "slides.blg"
   "slides.bbl"
-["xdvipdfmx"] 1628726354 "slides.xdv" "slides.pdf" "slides" 1628726355
-  "slides.xdv" 1628726354 732632 d50bf417dc8fa712f8a45348c33c4d80 "xelatex"
+  "slides.blg"
+["xdvipdfmx"] 1628737487 "slides.xdv" "slides.pdf" "slides" 1628737488
+  "slides.xdv" 1628737487 553652 b6333bf12e34bd9f8bc1aefe13a920c8 "xelatex"
   (generated)
   "slides.pdf"
-["xelatex"] 1628726349 "slides.tex" "slides.xdv" "slides" 1628726355
+["xelatex"] 1628737483 "slides.tex" "slides.xdv" "slides" 1628737488
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1617738065 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1617738065 1528 f853c4d1b4e0550255e02831fdc8496f ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1617738065 1004 54797486969f23fa377b128694d548df ""
@@ -239,16 +239,16 @@
   "media//pprimes_v_trial.png" 1628476770 56520 2a5873eaab18ac97a3a5747e68b5c8a0 ""
   "media//time_v_bases.png" 1628620901 53054 24485ae57608a180499696e5e3626a30 ""
   "media//time_v_trial.png" 1628620911 42655 b113c761f1c304b8d24ee74b58ac3f3f ""
-  "slides.aux" 1628726354 15203 8fc8ca93b8d8e118ceaa9c0cf976a7cc "xelatex"
-  "slides.bbl" 1628726349 1962 9f2f64437e3377ecfb537bdd6601181e "bibtex slides"
-  "slides.nav" 1628726354 6586 d76926c5482e3cfa31fd244f2c1f9c82 "xelatex"
-  "slides.out" 1628726354 2543 b194fd4ec00242e34046640e5f75586f "xelatex"
-  "slides.tex" 1628726343 26153 b1af7e7211fc6a6680ac79ba5a685846 ""
+  "slides.aux" 1628737487 13272 7fe6182b74ad39570703c07021297c0d "xelatex"
+  "slides.bbl" 1628737319 2616 54365b276dd4dd04da18ccf7857fad46 "bibtex slides"
+  "slides.nav" 1628737487 5878 4cec275bd4b77305b6d0f8bcc6b3639d "xelatex"
+  "slides.out" 1628737487 2406 8f95c0874b77e4006940b28c70892349 "xelatex"
+  "slides.tex" 1628737482 20483 425bb5b48fc145c16917c68111eca4e1 ""
   (generated)
-  "slides.nav"
-  "slides.log"
-  "slides.toc"
-  "slides.xdv"
-  "slides.snm"
   "slides.aux"
+  "slides.snm"
+  "slides.xdv"
   "slides.out"
+  "slides.toc"
+  "slides.log"
+  "slides.nav"

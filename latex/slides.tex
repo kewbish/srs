@@ -1,4 +1,4 @@
-\documentclass[pdf]{beamer}
+\documentclass[pdf,aspectratio=169]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -105,13 +105,6 @@
     \end{outline}
 \end{frame}
 
-\begin{frame}{Fermat Primality Test}
-    \begin{outline}
-        \1{This algorithm runs in $O(k \times \log{n})$ time complexity}
-        \2{Each of the modular exponentiations takes $O(\log{n})$, and there are $k$ exponentiations}
-    \end{outline}
-\end{frame}
-
 \subsection{Euler Primality Test}
 \begin{frame}{Euler Primality Test}
     \begin{outline}
@@ -123,7 +116,7 @@
 
 \begin{frame}{Euler Primality Test}
     \begin{outline}
-        \1{Since $a^{\phi(n)} \equiv 1 \pmod{p}$, $a^{\phi(n) / 2} \equiv 1 \pmod{p}$ is
+        \1{Since $a^{\phi(n)} \equiv 1 \pmod{p}$:
         \[
             a^{\phi(n) / 2} \equiv \begin{cases}
                 \;\;\,1\pmod{n}& \text{ when $x$ s.t. } a\equiv x^2 \pmod{n}\\
@@ -136,9 +129,6 @@
         \pause
         \1{As with the Fermat test, $k$ random bases $a$ are tested}
         \2{More accurate than Fermat, but there remains a chance a pseudoprime is passed}
-        \pause
-        \1{The Euler test runs in $O(k \times \log^3{n})$ time complexity}
-        \2{Each of the coprime to $n$, Jacobi symbol, and modular exponentiations checks takes $O(\log{n})$, so $\log{n}$ has a power of 3, and there are $k$ bases to check}
     \end{outline}
 \end{frame}
 
@@ -155,9 +145,6 @@
         \2{Strong probable $\leftrightarrow$ Miller-Rabin verified}
         \pause
         \1{This test passes far fewer pseudoprimes than Fermat or Euler tests}
-        \2{Between $10^5$ and $10^6$, 167 Fermat, 78 Euler, and 30 strong pseudoprimes found \cite{pomerance_pseudoprimes_1980}}
-        \pause
-        \1{The Miller-Rabin test also runs in $O(k \times \log^3{n})$ time complexity}
     \end{outline}
 \end{frame}
 
@@ -233,61 +220,12 @@
 \begin{frame}{Analysis Methods}
     \begin{outline}
         \1{Sympy's \texttt{isprime} function was used as a reference to test for primality}
-        \2{The numbers marked as prime by the primality test being analyzed were compared with the \texttt{isprime} results}
-        \pause
-        \1{The 'optimal' $k$ values (those that passed the lowest number of pseudoprimes) were recorded, as well as running time elapsed, minimum and maximum number of pseudoprimes passed, and other relevant variables}
         \pause
         \1{All the data collected can be found at \href{https://github.com/kewbish/srs/tree/master/dataset}{kewbish/srs} on GitHub}
     \end{outline}
 \end{frame}
 
 \section{Results}
-\begin{frame}{Average pseudoprimes vs. $k$ base trials}
-    \begin{columns}[t, onlytextwidth]
-        \begin{column}{0.65\textwidth}
-            \begin{figure}[h!]
-                \caption{The effect of increasing the number of base trials $k$ on pseudoprimes passed}
-                \label{fig:pprimes_v_bases}
-                \centering
-                \includegraphics[width=\textwidth]{pprimes_v_bases}
-            \end{figure}
-        \end{column}
-        \begin{column}{0.35\textwidth}
-            \fontsize{8}{9}\selectfont
-            \begin{outline}
-                \1{All tests pass larger numbers of pseudoprimes with higher $k$ values, expected due to probability}
-                \pause
-                \1{At $k=1$, Fermat passed the most pseudoprimes (6.5), Euler passed 3.2, Miller-Rabin 3.3}
-                \pause
-                \1{Miller-Rabin begins to pass low (<0.1) pseudoprimes first}
-                \pause
-                \1{Both Euler and Miller-Rabin consistently pass 0 pseudoprimes at higher $k$ values}
-            \end{outline}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-\begin{frame}{Average pseudoprimes vs. trial number}
-    \begin{columns}[t, onlytextwidth]
-        \begin{column}{0.65\textwidth}
-            \begin{figure}[h!]
-                \caption{Average pseudoprimes passed across all $1 \leq k \leq 50$ values per trial}
-                \label{fig:pprimes_v_trial}
-                \centering
-                \includegraphics[width=\textwidth]{pprimes_v_trial}
-            \end{figure}
-        \end{column}
-        \begin{column}{0.35\textwidth}
-            \fontsize{8}{9}\selectfont
-            \begin{outline}
-                \1{Fermat has a higher average at around 0.2327 pseudoprimes, whereas Euler and Miller-Rabin pass 0.0380 and 0.0303 pseudoprimes respectively}
-                \pause
-                \1{Miller-Rabin has the smallest range of numbers of pseudoprimes passed}
-            \end{outline}
-        \end{column}
-    \end{columns}
-\end{frame}
-
 \begin{frame}{Probabilistic primality tests - accuracy}
     \begin{columns}[t, onlytextwidth]
         \begin{column}{0.48\textwidth}
@@ -314,48 +252,6 @@
         \pause
         \1{Supported by the results of Pomerance, Selfridge, and Wagstaff, as well as by Monier's findings \cite{pomerance_pseudoprimes_1980}\cite{monier_evaluation_1980}}
     \end{outline}
-\end{frame}
-
-\begin{frame}{Running time vs. $k$ base trials}
-    \begin{columns}[t, onlytextwidth]
-        \begin{column}{0.65\textwidth}
-            \begin{figure}[h!]
-                \caption{The effect of increasing the number of base trials $k$ on running time elapsed}
-                \label{fig:time_v_bases}
-                \centering
-                \includegraphics[width=\textwidth]{time_v_bases}
-            \end{figure}
-        \end{column}
-        \begin{column}{0.35\textwidth}
-            \fontsize{8}{9}\selectfont
-            \begin{outline}
-                \1{Fermat's running time increases the most out of the existing tests, and takes the longest at any given $k$}
-                \pause
-                \1{Euler has a downwards slope of around -0.01sec/$k$, and is even faster than Miller-Rabin}
-                \pause
-                \1{Contrasts theoretical runtime where the expectations were Fermat < Euler = Miller-Rabin}
-            \end{outline}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-\begin{frame}{Running time vs. trial number}
-    \begin{columns}[t, onlytextwidth]
-        \begin{column}{0.65\textwidth}
-            \begin{figure}[h!]
-                \caption{Running time elapsed across all $1 \leq k \leq 100$ values per trial}
-                \label{fig:time_v_trial}
-                \centering
-                \includegraphics[width=\textwidth]{time_v_trial}
-            \end{figure}
-        \end{column}
-        \begin{column}{0.35\textwidth}
-            \fontsize{8}{9}\selectfont
-            \begin{outline}
-                \1{Again, contrasts expectations, with Euler outperforming Miller-Rabin, which was in turn faster than Fermat}
-            \end{outline}
-        \end{column}
-    \end{columns}
 \end{frame}
 
 \begin{frame}{Probabilistic primality tests - runtime}
@@ -397,7 +293,7 @@
             \fontsize{8}{9}\selectfont
             \begin{outline}
                 \setbeamerfont{itemize/enumerate subbody}{size=\scriptsize}
-                \1{Significant increase in number of projected pseudoprimes passed by probabilistic AKS compared to the existing tests (~200 vs. <10)}
+                \1{Significant increase in number of projected pseudoprimes passed by probabilistic AKS compared to the existing tests (\~200 vs. <10)}
                 \2{Projection method: multiply pseudoprimes found by $10^2$}
                 \pause
                 \1{Due to the relatively very low $k$ values tested for probabilistic AKS}
@@ -516,22 +412,6 @@
         \1{Probabilistic AKS: high numbers of pseudoprimes passed at low $k$, much faster than deterministic AKS $\rightarrow$ may provide a suitable alternative to deterministic AKS for more practical applications given high enough $k$ values}
     \end{outline}
 \end{frame}
-
-\subsection{Future Research}
-\begin{frame}{Future Research}
-    \begin{outline}
-        \1{To address the sources of error discussed earlier, future research to be conducted includes:}
-        \pause
-        \2{Experimenting with larger bounds for each primality test; perhaps $10^7$ to $10^9$}
-        \pause
-        \2{Running additional trials with the full $10^4$ numbers for probabilistic AKS, and increasing the number of trials run for the other primality tests as well}
-        \pause
-        \2{Precomputing an array of deterministically verified (with AKS) values to check primality against}
-        \pause
-        \2{Adjusting the bounds of $r$ in probabilistic AKS to further improve the theoretical runtime complexity}
-    \end{outline}
-\end{frame}
-
 
 \subsection{Acknowledgements}
 \begin{frame}{Acknowledgements}

@@ -16,6 +16,13 @@ Hendrik Lenstra, Jr. and Carl Pomerance.
 \newblock Primality testing with {Gaussian} periods.
 \newblock July 2005.
 
+\bibitem{miller_riemanns_1975}
+Gary~L. Miller.
+\newblock Riemann's {Hypothesis} and tests for primality.
+\newblock In {\em Proceedings of seventh annual {ACM} symposium on {Theory} of
+  computing - {STOC} '75}, pages 234--239, Albuquerque, New Mexico, United
+  States, 1975. ACM Press.
+
 \bibitem{monier_evaluation_1980}
 Louis Monier.
 \newblock Evaluation and comparison of two efficient probabilistic primality
@@ -33,11 +40,21 @@ Carl Pomerance, J.~L. Selfridge, and Samuel~S Wagstaff.
 \newblock The {Pseudoprimes} to 25 • 10{\textasciicircum}9.
 \newblock {\em Mathematics of Computation}, 35(151):1003--1026, July 1980.
 
+\bibitem{rabin_probabilistic_1980}
+Michael~O Rabin.
+\newblock Probabilistic algorithm for testing primality.
+\newblock {\em Journal of Number Theory}, 12(1):128--138, February 1980.
+
 \bibitem{rotella_efficient_2005}
 Chris Rotella.
 \newblock {\em An {Efficient} {Implementation} of the {AKS} {Polynomial}-{Time}
   {Primality} {Proving} {Algorithm}}.
 \newblock Thesis, Carnegie Mellon University, May 2005.
+
+\bibitem{solovay_fast_1977}
+R.~Solovay and V.~Strassen.
+\newblock A {Fast} {Monte}-{Carlo} {Test} for {Primality}.
+\newblock {\em SIAM Journal on Computing}, 6(1):84--85, March 1977.
 
 \bibitem{stephanou_ssophoclis/aks-algorithm:_2020}
 Sophoclis Stephanou.
