@@ -1,49 +1,49 @@
 This is BibTeX, Version 0.99d (TeX Live 2021/Arch Linux)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Primality.aux
-The style file: plain.bst
+The style file: plainnat.bst
 Database file #1: references.bib
 Warning--empty journal in lenstra_jr._primality_2005
 Warning--empty institution in nemana_empirical_2016
-You've used 10 entries,
-            2118 wiz_defined-function locations,
-            551 strings with 5367 characters,
-and the built_in function-call counts, 2552 in all, are:
-= -- 250
-> -- 104
-< -- 1
-+ -- 46
-- -- 32
-* -- 172
-:= -- 457
-add.period$ -- 28
-call.type$ -- 10
-change.case$ -- 46
-chr.to.int$ -- 0
-cite$ -- 12
-duplicate$ -- 93
-empty$ -- 201
-format.name$ -- 32
-if$ -- 504
-int.to.chr$ -- 0
-int.to.str$ -- 10
-missing$ -- 4
-newline$ -- 51
-num.names$ -- 20
-pop$ -- 51
+You've used 13 entries,
+            2773 wiz_defined-function locations,
+            687 strings with 7497 characters,
+and the built_in function-call counts, 5234 in all, are:
+= -- 524
+> -- 203
+< -- 13
++ -- 73
+- -- 60
+* -- 407
+:= -- 834
+add.period$ -- 60
+call.type$ -- 13
+change.case$ -- 59
+chr.to.int$ -- 13
+cite$ -- 28
+duplicate$ -- 247
+empty$ -- 436
+format.name$ -- 79
+if$ -- 1085
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 7
+newline$ -- 93
+num.names$ -- 52
+pop$ -- 97
 preamble$ -- 1
-purify$ -- 36
+purify$ -- 46
 quote$ -- 0
-skip$ -- 65
+skip$ -- 177
 stack$ -- 0
-substring$ -- 132
-swap$ -- 9
-text.length$ -- 1
+substring$ -- 180
+swap$ -- 32
+text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 40
+type$ -- 143
 warning$ -- 2
-while$ -- 26
-width$ -- 12
-write$ -- 104
+while$ -- 52
+width$ -- 0
+write$ -- 214
 (There were 2 warnings)

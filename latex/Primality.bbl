@@ -1,56 +1,111 @@
-\begin{thebibliography}{10}
+\begin{thebibliography}{13}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem{agrawal_primes_2004}
+\bibitem[Agrawal et~al.(2004)Agrawal, Kayal, and Saxena]{agrawal_primes_2004}
 Manindra Agrawal, Neeraj Kayal, and Nitin Saxena.
 \newblock {PRIMES} is in {P}.
-\newblock {\em Annals of Mathematics}, 160(2):781--793, September 2004.
+\newblock \emph{Annals of Mathematics}, 160\penalty0 (2):\penalty0 781--793,
+  September 2004.
+\newblock ISSN 0003-486X.
+\newblock \doi{10.4007/annals.2004.160.781}.
+\newblock URL \url{http://annals.math.princeton.edu/2004/160-2/p12}.
 
-\bibitem{brent_primality_2010}
+\bibitem[Brent(2010)]{brent_primality_2010}
 Richard~P Brent.
-\newblock {\em Primality {Testing}}.
+\newblock \emph{Primality {Testing}}.
 \newblock Thesis, Australian National University, Mathematical Sciences
   Institute and College of Engineering and Computer Science, August 2010.
+\newblock URL
+  \url{https://maths-people.anu.edu.au/~brent/pd/comp4600_primality.pdf}.
 
-\bibitem{lenstra_jr._primality_2005}
+\bibitem[Lenstra and Pomerance(2005)]{lenstra_jr._primality_2005}
 Hendrik Lenstra, Jr. and Carl Pomerance.
 \newblock Primality testing with {Gaussian} periods.
 \newblock July 2005.
+\newblock \doi{10.4171/JEMS/861}.
+\newblock URL \url{https://math.dartmouth.edu/~carlp/PDF/complexity12.pdf}.
 
-\bibitem{monier_evaluation_1980}
+\bibitem[Miller(1975)]{miller_riemanns_1975}
+Gary~L. Miller.
+\newblock Riemann's {Hypothesis} and tests for primality.
+\newblock In \emph{Proceedings of seventh annual {ACM} symposium on {Theory} of
+  computing - {STOC} '75}, pages 234--239, Albuquerque, New Mexico, United
+  States, 1975. ACM Press.
+\newblock \doi{10.1145/800116.803773}.
+\newblock URL \url{http://portal.acm.org/citation.cfm?doid=800116.803773}.
+
+\bibitem[Monier(1980)]{monier_evaluation_1980}
 Louis Monier.
 \newblock Evaluation and comparison of two efficient probabilistic primality
   testing algorithms.
-\newblock {\em Theoretical Computer Science}, 12(1):97--108, September 1980.
+\newblock \emph{Theoretical Computer Science}, 12\penalty0 (1):\penalty0
+  97--108, September 1980.
+\newblock ISSN 03043975.
+\newblock \doi{10.1016/0304-3975(80)90007-9}.
+\newblock URL
+  \url{https://linkinghub.elsevier.com/retrieve/pii/0304397580900079}.
 
-\bibitem{nemana_empirical_2016}
+\bibitem[Nemana and Venkaiah(2016)]{nemana_empirical_2016}
 Lalitha~Kiran Nemana and V.~Ch Venkaiah.
 \newblock An empirical study towards refining the aks primality testing
   algorithm.
 \newblock Technical Report 362, 2016.
+\newblock URL \url{https://eprint.iacr.org/2016/362}.
 
-\bibitem{pomerance_pseudoprimes_1980}
+\bibitem[Pomerance et~al.(1980)Pomerance, Selfridge, and
+  Wagstaff]{pomerance_pseudoprimes_1980}
 Carl Pomerance, J.~L. Selfridge, and Samuel~S Wagstaff.
 \newblock The {Pseudoprimes} to 25 • 10{\textasciicircum}9.
-\newblock {\em Mathematics of Computation}, 35(151):1003--1026, July 1980.
+\newblock \emph{Mathematics of Computation}, 35\penalty0 (151):\penalty0
+  1003--1026, July 1980.
 
-\bibitem{rotella_efficient_2005}
+\bibitem[Rabin(1980)]{rabin_probabilistic_1980}
+Michael~O Rabin.
+\newblock Probabilistic algorithm for testing primality.
+\newblock \emph{Journal of Number Theory}, 12\penalty0 (1):\penalty0 128--138,
+  February 1980.
+\newblock ISSN 0022314X.
+\newblock \doi{10.1016/0022-314X(80)90084-0}.
+\newblock URL
+  \url{https://linkinghub.elsevier.com/retrieve/pii/0022314X80900840}.
+
+\bibitem[Rotella(2005)]{rotella_efficient_2005}
 Chris Rotella.
-\newblock {\em An {Efficient} {Implementation} of the {AKS} {Polynomial}-{Time}
-  {Primality} {Proving} {Algorithm}}.
+\newblock \emph{An {Efficient} {Implementation} of the {AKS}
+  {Polynomial}-{Time} {Primality} {Proving} {Algorithm}}.
 \newblock Thesis, Carnegie Mellon University, May 2005.
+\newblock URL
+  \url{http://www.cs.cmu.edu/afs/cs/user/mjs/ftp/thesis-program/2005/rotella.pdf}.
 
-\bibitem{stephanou_ssophoclis/aks-algorithm:_2020}
+\bibitem[Solovay and Strassen(1977)]{solovay_fast_1977}
+R.~Solovay and V.~Strassen.
+\newblock A {Fast} {Monte}-{Carlo} {Test} for {Primality}.
+\newblock \emph{SIAM Journal on Computing}, 6\penalty0 (1):\penalty0 84--85,
+  March 1977.
+\newblock ISSN 0097-5397, 1095-7111.
+\newblock \doi{10.1137/0206006}.
+\newblock URL \url{http://epubs.siam.org/doi/10.1137/0206006}.
+
+\bibitem[Stephanou(2020)]{stephanou_ssophoclis/aks-algorithm:_2020}
 Sophoclis Stephanou.
 \newblock Ssophoclis/{AKS}-algorithm: {Implementation} of the {AKS} primality
   test algorithm in python., July 2020.
+\newblock URL \url{https://github.com/Ssophoclis/AKS-algorithm}.
 
-\bibitem{sympy_number_2021}
+\bibitem[Team(2021)]{sympy_number_2021}
 SymPy~Development Team.
 \newblock Number {Theory} — {SymPy} 1.8 documentation, April 2021.
+\newblock URL
+  \url{https://docs.sympy.org/latest/modules/ntheory.html#sympy.ntheory.primetest.isprime}.
 
-\bibitem{terzian_aks_2013}
+\bibitem[Terzian(2013)]{terzian_aks_2013}
 Tammy Terzian.
-\newblock {\em The {AKS} {Primality} {Test}}.
+\newblock \emph{The {AKS} {Primality} {Test}}.
 \newblock Thesis, The California State University, October 2013.
+\newblock URL \url{https://repository.library.csuci.edu/handle/10211.3/57096}.
 
 \end{thebibliography}
