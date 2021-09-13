@@ -1,4 +1,4 @@
-from aks_primality import aks_probablistic, aks_primality
+from ..scripts/aks_primality import aks_probablistic, aks_primality
 import numpy as np
 from timeit import default_timer
 

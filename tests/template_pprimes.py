@@ -48,9 +48,3 @@ def time_output(fn) -> None:
     results = np.array([timeit(lambda: template_pprimes(k, fn), number=50) for k in range(51)])
     print(repr(results))
     print(",".join([str(r) for r in results]))
-
-
-if __name__ == "__main__":
-    from fermat_primality import fermat_primality
-
-    output(fermat_primality)

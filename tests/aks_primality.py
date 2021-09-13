@@ -132,9 +132,7 @@ def aks_probablistic(n: int, k: int) -> bool:
     if n <= r:  # step 4
         return True
 
-    k_max = floor(
-        r ** (1 / 2) * np.log2(n)
-    )  # https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.455.5241&rep=rep1&type=pdf
+    k_max = floor(r ** (1 / 2) * np.log2(n))
     if k > k_max:
         k = k_max
     a_arr = np.random.randint(1, k_max, k)
@@ -143,17 +141,3 @@ def aks_probablistic(n: int, k: int) -> bool:
         if np.all(x):
             return True
     return False
-
-
-if __name__ == "__main__":
-
-    def main():
-        ints = np.arange(3, 10 ** 4)
-        # aks_res = aks_primality(ints)
-        # sympy_res = np.vectorize(isprime)(ints)
-        # print(len(aks_res[np.logical_and(aks_res, np.logical_not(sympy_res))]))
-        aks_res = aks_probablistic(ints, 10)
-        sympy_res = np.vectorize(isprime)(ints)
-        print(len(aks_res[np.logical_and(aks_res, np.logical_not(sympy_res))]))
-
-    main()

@@ -55,14 +55,3 @@ def euler_primality(n: int, k: int, arga: int = 0) -> bool:
         if power_mod(a, (n - 1) // 2, n) != jacobi_symbol(a, n):
             return False
     return True
-
-
-if __name__ == "__main__":
-
-    def main():
-        ints = np.arange(1, 10 ** 4)
-        euler_res = euler_primality(ints, 20, 0)
-        sympy_res = np.vectorize(isprime)(ints)
-        print(len(euler_res[np.logical_and(euler_res, np.logical_not(sympy_res))]))
-
-    main()

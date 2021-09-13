@@ -52,14 +52,3 @@ def mr_primality(n: int, k: int, arga: int = 0) -> bool:
         if composite(a, d, n, r):
             return False
     return True
-
-
-if __name__ == "__main__":
-
-    def main():
-        ints = np.arange(1, 10 ** 4)
-        mr_res = mr_primality(ints, 20, 0)
-        sympy_res = np.vectorize(isprime)(ints)
-        print(len(mr_res[np.logical_and(mr_res, np.logical_not(sympy_res))]))
-
-    main()
