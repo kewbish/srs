@@ -8,7 +8,7 @@ from sympy import isprime
 # heavily referenced: https://github.com/Ssophoclis/AKS-algorithm/blob/master/AKS.py
 
 
-@njit
+@njit(fastmath=True)
 def is_perfect_power(n: int) -> bool:
     for b in range(2, int(np.log2(n)) + 1):
         a = n ** (1 / b)
@@ -17,7 +17,7 @@ def is_perfect_power(n: int) -> bool:
     return False
 
 
-@njit
+@njit(fastmath=True)
 def find_r(n: int) -> int:
     maxK = np.log2(n) ** 2
     nexR = True
@@ -33,7 +33,7 @@ def find_r(n: int) -> int:
     return r
 
 
-@njit
+@njit(fastmath=True)
 def power_mod(base: int, power: int, n: int) -> int:
     r = 1
     while power > 0:
@@ -44,7 +44,7 @@ def power_mod(base: int, power: int, n: int) -> int:
     return r
 
 
-@njit
+@njit(fastmath=True)
 def poly_mod(base: np.ndarray, power: int, r: int) -> np.ndarray:
     x = np.zeros(len(base), dtype=np.int64)
     a = base[0]
@@ -62,7 +62,7 @@ def poly_mod(base: np.ndarray, power: int, r: int) -> np.ndarray:
     return x
 
 
-@njit
+@njit(fastmath=True)
 def multi(a: np.ndarray, b: np.ndarray, n: int, r: int) -> np.ndarray:
     x = np.zeros(len(a) + len(b) - 1, dtype=np.int64)
     for i in range(len(a)):
@@ -74,7 +74,7 @@ def multi(a: np.ndarray, b: np.ndarray, n: int, r: int) -> np.ndarray:
     return x
 
 
-@njit
+@njit(fastmath=True)
 def phi(r: int) -> int:
     x = 0
     for i in range(1, r + 1):

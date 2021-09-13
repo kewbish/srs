@@ -4,7 +4,7 @@ from random import randint
 from sympy import isprime
 
 
-@njit
+@njit(fastmath=True)
 def power_mod(b: int, e: int, n: int) -> int:
     if n == 1:
         return 0

@@ -22,12 +22,9 @@ def template_pprimes(k: int, fn) -> float:
             res_2 = fn(n, 1, int(argv[2]))
         if len(argv) < 3:
             if res and not isprime(n):  # for passing 1 base
-                # print(f"Fermat pseudoprime: {n}, tries: {k}")
                 pprimes += 1
         else:
             if res and res_2 and not isprime(n):  # for passing 2 bases together
-                # Fermat primality returns True, Symp returns False => pseudoprime
-                # print(f"Fermat pseudoprime: {n}, tries: {k}")
                 pprimes += 1
     return pprimes
 

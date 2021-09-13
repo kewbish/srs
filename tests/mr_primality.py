@@ -4,7 +4,7 @@ from random import randint
 from sympy import isprime
 
 
-@njit
+@njit(fastmath=True)
 def power_mod(b: int, e: int, n: int) -> int:
     if n == 1:
         return 0
@@ -18,7 +18,7 @@ def power_mod(b: int, e: int, n: int) -> int:
     return res
 
 
-@njit
+@njit(fastmath=True)
 def composite(a: int, d: int, n: int, r: int) -> bool:
     if power_mod(a, d, n) == 1:
         return False
