@@ -3,7 +3,6 @@ import numpy as np
 from random import randrange
 from sympy import isprime
 from sys import argv
-from timeit import default_timer, timeit
 
 
 @njit
@@ -27,24 +26,3 @@ def template_pprimes(k: int, fn) -> float:
             if res and res_2 and not isprime(n):  # for passing 2 bases together
                 pprimes += 1
     return pprimes
-
-
-def output(fn) -> None:
-    start = default_timer()
-    print(argv)
-    ints = np.arange(1, 100)
-    results = np.array([template_pprimes(n, fn) for n in ints])
-    print(repr(results))
-    print(round(np.average(results), 4))
-    print((ints[np.argmin(results)], np.min(results)))
-    end = default_timer()
-    m, s = divmod(end - start, 60)
-    print(f"{round(m)}m{round(s, 4)}s")
-    print("\n")
-
-
-def time_output(fn) -> None:
-    print(argv)
-    results = np.array([timeit(lambda: template_pprimes(k, fn), number=50) for k in range(51)])
-    print(repr(results))
-    print(",".join([str(r) for r in results]))
