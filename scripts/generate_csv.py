@@ -3,11 +3,12 @@ from sys import path
 path.append("..")
 
 import numpy as np
-from ..tests.fermat_primality import fermat_primality
-from ..tests.euler_primality import euler_primality
-from ..tests.mr_primality import mr_primality
-from ..tests.aks_primality import aks_probablistic
-from ..tests.template_pprimes import template_pprimes
+from sys import argv
+from tests.fermat_primality import fermat_primality
+from tests.euler_primality import euler_primality
+from tests.mr_primality import mr_primality
+from tests.aks_primality import aks_probablistic
+from tests.template_pprimes import template_pprimes
 from timeit import default_timer, timeit
 
 
@@ -41,12 +42,34 @@ def csv_line(fn, pprimes: bool = True) -> str:
     return line
 
 
-for _ in range(51):
-    fermat = open("../dataset/fermat.csv", "a")
-    euler = open("../dataset/euler.csv", "a")
-    mr = open("../dataset/mr.csv", "a")
-    aks = open("../dataset/aks.csv", "a")
-    fermat.write(csv_line(fermat_primality))
-    euler.write(csv_line(euler_primality))
-    mr.write(csv_line(mr_primality))
-    aks.write(csv_line(aks_probablistic))
+def arg_parse(arg) -> None:
+    def fermat():
+        fermat = open("../dataset/fermat.csv", "a")
+        fermat.write(csv_line(fermat_primality))
+
+    def euler():
+        euler = open("../dataset/euler.csv", "a")
+        euler.write(csv_line(euler_primality))
+
+    def mr():
+        mr = open("../dataset/mr.csv", "a")
+        mr.write(csv_line(mr_primality))
+
+    def aks():
+        aks = open("../dataset/aks.csv", "a")
+        aks.write(csv_line(aks_probablistic))
+
+    def all_tests():
+        fermat()
+        euler()
+        mr()
+        aks()
+
+    cases = {"--f": fermat, "--e": euler, "--m": mr, "--a": aks, "--all": all_tests}
+    cases.get(arg)()
+
+
+# run the file as python generate_csv.py [num] [--f,--e,--m,--a,--all]
+# num => number of runs
+for _ in range(int(argv[1])):
+    arg_parse(argv[2])
