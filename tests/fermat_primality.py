@@ -19,7 +19,7 @@ def power_mod(b: int, e: int, n: int) -> int:
 
 
 @vectorize
-def fermat_primality(n: int, k: int, arga: int = 0) -> bool:
+def fermat_primality(n: int, k: int) -> bool:
     """
     Returns True if number is probably prime.
     Returns False if number is composite.
@@ -31,7 +31,7 @@ def fermat_primality(n: int, k: int, arga: int = 0) -> bool:
     elif n % 2 == 0:
         return False
     for _ in range(k):
-        a = randint(2, n - 2) if arga == 0 else arga
+        a = randint(2, n - 2)
         if power_mod(a, n - 1, n) != 1:
             return False
     return True

@@ -29,7 +29,7 @@ def composite(a: int, d: int, n: int, r: int) -> bool:
 
 
 @vectorize
-def mr_primality(n: int, k: int, arga: int = 0) -> bool:
+def mr_primality(n: int, k: int) -> bool:
     """
     Returns True if number is probably prime.
     Returns False if number is composite.
@@ -48,7 +48,7 @@ def mr_primality(n: int, k: int, arga: int = 0) -> bool:
         r += 1
 
     for _ in range(k):
-        a = randint(2, n) if arga == 0 else arga
+        a = randint(2, n)
         if composite(a, d, n, r):
             return False
     return True

@@ -39,7 +39,7 @@ def jacobi_symbol(a: int, n: int) -> int:
 
 
 @vectorize
-def euler_primality(n: int, k: int, arga: int = 0) -> bool:
+def euler_primality(n: int, k: int) -> bool:
     """
     Returns True if number is probably prime.
     Returns False if number is composite.
@@ -51,7 +51,7 @@ def euler_primality(n: int, k: int, arga: int = 0) -> bool:
     elif n % 2 == 0:
         return False
     for _ in range(k):
-        a = randint(2, n - 2) if arga == 0 else arga
+        a = randint(2, n - 2)
         if power_mod(a, (n - 1) // 2, n) != jacobi_symbol(a, n):
             return False
     return True
